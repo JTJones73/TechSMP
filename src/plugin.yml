@@ -1,0 +1,34 @@
+name: TechSMP
+main: tech.techsmp.core.Main
+version: 0.0.1
+commands:
+   verify:
+      description: Verifies User
+      usage: /verify <player>
+   rank:
+      description: adds rank to user
+      usage: /rank <player> <trusted|admin|owner>
+   wl:
+      description: Temporarily whitelists a player
+      usage: /wl <player>
+   spec:
+      description: Temporarily whitelists a player
+      usage: /spec <on|off> [player]
+   tpa:
+      description: sends teleport request to a player
+      usage: /tpa <player>
+   tpaccept:
+      description: accepts teleport request
+      usage: /tpaccept
+   tpdeny:
+      description: denies teleport request
+      usage: /tpdeny
+   bedtp:
+      description: Teleports you to your bed
+      usage: /bedtp
+   discord:
+      description: Gives link to our discord
+      usage: /discord
+
+
+
