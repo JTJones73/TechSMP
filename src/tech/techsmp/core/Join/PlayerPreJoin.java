@@ -19,7 +19,7 @@ public class PlayerPreJoin implements Listener{
             if(p.isBanned()){
                 e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "§cYou are banned from this server. \n §ePlease message an admin on our discord to be given an unban date\n§Discord: discord.ttumc.net");
             }
-            if(e.getAddress().toString().startsWith("/149.149.2.")){
+            if(e.getAddress().toString().startsWith("/private")){
                 e.allow();
                 p.setWhitelisted(false);
                 return;
@@ -27,7 +27,6 @@ public class PlayerPreJoin implements Listener{
             Whitelist wl = new Whitelist();
             if(wl.isPlayerWhitelisted(e.getName().toString().toLowerCase())){
                 e.allow();
-                p.setWhitelisted(false);
                 return;
             }
             else{
