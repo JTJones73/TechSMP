@@ -21,12 +21,27 @@ public class Main extends JavaPlugin{
                 plugin = this;
         Logger.getLogger("Minecraft").info("TechSMP By James Jones");
         Bukkit.getServer().getPluginManager().registerEvents(new Chat(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPostJoin(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SleepingPercent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPreJoin(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SpecTP(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new JoinAndLeaveMessage(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new CreeperExplosion(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PetDamage(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PetToggleSit(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new TabCompleter(), this);
 
         getCommand("discord").setExecutor(new Discord());
+        getCommand("home").setExecutor(new Homes());
+        getCommand("back").setExecutor(new Back());
+        getCommand("sethome").setExecutor(new Sethome());
+        getCommand("delhome").setExecutor(new Delhome());
+        getCommand("fullbright").setExecutor(new Fullbright());
+        getCommand("mute").setExecutor(new Mute());
+        getCommand("invsee").setExecutor(new Invsee());
+        getCommand("roundup").setExecutor(new Roundup());
         getCommand("bedtp").setExecutor(new BedTP());
         getCommand("verify").setExecutor(new Verify());
         getCommand("wl").setExecutor(new Whitelist());
