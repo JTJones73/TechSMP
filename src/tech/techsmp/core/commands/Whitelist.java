@@ -29,9 +29,10 @@ public class Whitelist implements CommandExecutor {
 							sender.sendMessage("§c" + args[0] + " is already whitelisted");
 						}
 					
-		
-				
-			}
+					}
+					else {
+						sender.sendMessage("§cError usage: /wl <player> (allows you to temporarily whitelist a player)");
+					}
 			}
 		
     	return true;

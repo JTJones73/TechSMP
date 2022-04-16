@@ -13,16 +13,22 @@ public class Verify implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("Verify")) {
             if(sender.hasPermission("rank.trusted")){
                 if(args.length == 1){
-                    try{
+                    try {
                         OfflinePlayer p = Bukkit.getServer().getOfflinePlayer(args[0]);
-                        p.setWhitelisted(true);
-                        sender.sendMessage("§aPlayer " + p.getName().toString() + " has been verified!");
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + p.getName());
+                        if(p.isWhitelisted())
+                        	sender.sendMessage("§aPlayer " + p.getName().toString() + " has been verified!");
+                        else
+                            sender.sendMessage("§cError: Could not find player");
+
                     }
                     catch(Exception e){
                         sender.sendMessage("§cError: Could not find player");
                     }
                 }
             }
+            else
+            	sender.sendMessage("§cSorry! You do not have permission to use this command.");
 
         }
         else{
