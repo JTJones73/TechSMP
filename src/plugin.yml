@@ -1,6 +1,7 @@
 name: TechSMP
 main: tech.techsmp.core.Main
-version: 0.0.1
+version: 0.2.0
+api-version: 1.18
 commands:
    verify:
       description: Verifies User
@@ -12,7 +13,7 @@ commands:
       description: Temporarily whitelists a player
       usage: /wl <player>
    spec:
-      description: Temporarily whitelists a player
+      description: Puts a player in spectator mode
       usage: /spec <on|off> [player]
    tpa:
       description: sends teleport request to a player
@@ -29,6 +30,34 @@ commands:
    discord:
       description: Gives link to our discord
       usage: /discord
+   invsee:
+      description: Allows staff to view player inventories
+      usage: /invsee <player> [-e]
+   roundup:
+      description: Teleports all of your pets to you
+      usage: /roundup
+   fullbright:
+      description: Gives you night vision
+      usage: /fullbright
+   mute:
+      description: Prevents annoying people from being annoying
+      usage: /mute <player>
+   home:
+      description: Currently in development
+      usage: /home <home name>
+   sethome:
+      description: Currently in development
+      usage: /sethome <home name>
+   delhome:
+      description: Currently in development
+      usage: /delhome <home name>
+   back:
+      description: Teleports you to your last location before teleporting
+      usage: /back
+   tp:
+      description: Allows you to teleport to others
+      usage: /tp <player>
+
 
 
 
