@@ -11,17 +11,20 @@ public class SpecTP implements Listener{
 
 @EventHandler
   public void onPreprocess(PlayerCommandPreprocessEvent event){
-      if(event.getMessage().toLowerCase().startsWith("/help")){
+      if(event.getMessage().toLowerCase().startsWith("/help") || event.getMessage().toLowerCase().startsWith("/?")){
           event.setCancelled(true);
           Player p = event.getPlayer();
           p.sendMessage("§9------Welcome to the Tennessee Tech MC Server------");
           p.sendMessage("§9/help                    §7§7Displays help message");
           p.sendMessage("§9§9/discord                §7§7Gives link to our discord");
+          p.sendMessage("§9§9/roundup                §7§7Teleports all of your loaded pets to you");
           p.sendMessage("§9/bedtp                   §7§7Teleports you to your bed");
           p.sendMessage("§9/tpa <player>          §7§7Sends teleport request to player");
           p.sendMessage("§9/wl <player>            §7§7Temporarily whitelists a player");
+          p.sendMessage("§9/fullbright              §7§7Toggles night visions");
+          p.sendMessage("§9/home                    §7§7Teleports you home (use: /sethome)");
           p.sendMessage("§9/help                     §7§7Displays help message");
-        return;
+          return;
 
       }
       if(!event.getPlayer().isOp()){
@@ -32,10 +35,21 @@ public class SpecTP implements Listener{
 
             }
       }
+      if(!event.getPlayer().isOp()){
+          if(event.getMessage().toLowerCase().startsWith("/whitelist")){
+        	  if(event.getMessage().length() >= 12) {
+        		  Bukkit.dispatchCommand(event.getPlayer(), "wl " + event.getMessage().substring(11));
+        	  }
+        	  else
+        		  Bukkit.dispatchCommand(event.getPlayer(), "wl");
+             event.setCancelled(true);
+             return;
+
+            }
+      }
       if(!(event.getMessage().startsWith("/tp ") || (event.getMessage().length() < 4 && event.getMessage().startsWith("/tp"))) )
         return;
     Player p = event.getPlayer();
-    if(!p.isOp()){
         event.setCancelled(true);
         if(p.getGameMode().equals(GameMode.SPECTATOR)){
             if(event.getMessage().split(" ").length > 1){
@@ -54,7 +68,6 @@ public class SpecTP implements Listener{
         }
         else
             p.sendMessage("§cError: you must be in spectator mode to use this command");
-    }
 }
     
 }
