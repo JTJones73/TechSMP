@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.EventHandler;
@@ -21,24 +22,49 @@ public class Chat implements Listener{
         Player p = e.getPlayer();
     	if(Muted.contains(p.getUniqueId().toString())){
     		p.sendMessage("§cSorry! You are muted and cannot talk in chat.");
-            Logger.getLogger("Minecraft").info("[Muted] " + p.getName() +" " + e.getMessage());
+            Bukkit.getLogger().info("[Muted] " + p.getName() +" " + e.getMessage());
             e.setCancelled(true);
             return;
     	}
         if(p.hasPermission("rank.owner") && p.hasPermission("rank.owner")){
-            e.setFormat("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
+        	e.setCancelled(true);
+        	for(Player iPlayer : Bukkit.getOnlinePlayers()){
+            	iPlayer.sendMessage("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
+            }
+            Bukkit.getLogger().info("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
+
         }
         else if(p.hasPermission("rank.admin")){
-            e.setFormat("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
+        	e.setCancelled(true);
+        	for(Player iPlayer : Bukkit.getOnlinePlayers()){
+            	iPlayer.sendMessage("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
+            }
+            Bukkit.getLogger().info("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
+
         }
         else if(p.hasPermission("rank.trusted")){
-            e.setFormat("§e§l✩§f §r" + p.getName().toString() + " » " + message);
+        	e.setCancelled(true);
+        	for(Player iPlayer : Bukkit.getOnlinePlayers()){
+            	iPlayer.sendMessage("§e§l✩§f §r" + p.getName().toString() + " » " + message);
+            }
+            Bukkit.getLogger().info("§e§l✩§f §r" + p.getName().toString() + " » " + message);
+
         }
         else if(p.isWhitelisted()){
-            e.setFormat(p.getName().toString() + " » " + e.getMessage());
+        	e.setCancelled(true);
+        	for(Player iPlayer : Bukkit.getOnlinePlayers()){
+            	iPlayer.sendMessage(p.getName().toString() + " » " + e.getMessage());
+            }
+            Bukkit.getLogger().info(p.getName().toString() + " » " + e.getMessage());
+
         }
         else{
-            e.setFormat("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
+        	e.setCancelled(true);
+        	for(Player iPlayer : Bukkit.getOnlinePlayers()){
+            	iPlayer.sendMessage("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
+            }
+            Bukkit.getLogger().info("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
+
 
         }
     }

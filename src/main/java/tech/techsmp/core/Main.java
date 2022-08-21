@@ -3,6 +3,13 @@ import tech.techsmp.core.cosmetic.*;
 import tech.techsmp.core.commands.*;
 import tech.techsmp.core.Listeners.*;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+
 
 
 import tech.techsmp.core.Join.*;
@@ -11,15 +18,20 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 
 
 
 
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin implements Listener{
+    public ProtocolManager pm;
         static Main plugin;
 	public void onEnable(){
                 plugin = this;
-        Logger.getLogger("Minecraft").info("TechSMP By James Jones");
+        Bukkit.getLogger().info("TechSMP By James Jones");
         Bukkit.getServer().getPluginManager().registerEvents(new Chat(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPostJoin(), this);
@@ -34,6 +46,8 @@ public class Main extends JavaPlugin{
         Bukkit.getServer().getPluginManager().registerEvents(new TabCompleter(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new GuiListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ArmorStandListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
+
 
 
         getCommand("discord").setExecutor(new Discord());
@@ -56,6 +70,14 @@ public class Main extends JavaPlugin{
         getCommand("inspect").setExecutor(new Inspect(this));
         getCommand("tban").setExecutor(new Tban());
         getCommand("rank").setExecutor(new Rank(this));
+        
+        ItemStack membrane = new ItemStack(Material.PHANTOM_MEMBRANE);
+        ShapedRecipe membraneRecipe = new ShapedRecipe(membrane);
+        membraneRecipe.shape("FC","SN");
+        membraneRecipe.setIngredient('F', Material.ROTTEN_FLESH);
+        membraneRecipe.setIngredient('C', Material.CHORUS_FRUIT);
+        membraneRecipe.setIngredient('S', Material.STRING);
+        getServer().addRecipe(membraneRecipe);
         
     }
     public static Main getInstance(){

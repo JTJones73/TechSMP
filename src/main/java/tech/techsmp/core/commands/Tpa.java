@@ -30,16 +30,16 @@ public class Tpa implements CommandExecutor {
                 try{
                     Player tPlayer = Bukkit.getServer().getPlayer(args[0]);
                     //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + tPlayer.getName() + " {\"text\":\"" + p.getName() + "  wants to teleport to you \",\"color\":\"yellow\",\"bold\":\"false\",\"extra\":[{\"text\":\"§l[Accept] \",\"color\":\"green\",\"bold\":\"false\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tpaccept " + p.getName() + "\"},\"extra\":[{\"text\":\"§l[Deny]\",\"color\":\"red\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/tpdeny " + p.getName() + "\"}}]}]}");
-	    				TextComponent msg = new TextComponent("§e" + tPlayer.getName() + " wants to teleport to you ");
+	    				TextComponent msg = new TextComponent("§e" + p.getName() + " wants to teleport to you ");
 	    				TextComponent accept = new TextComponent("§a§l[Accept]");
 	    				TextComponent deny = new TextComponent(" §c§l[Deny]");
-	    				accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a/tpaccept " + tPlayer.getName()).create()));
-	    				accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + tPlayer.getName()));
-	    				deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§c/tpdeny " + tPlayer.getName()).create()));
-	    				deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpdeny " + tPlayer.getName()));
+	    				accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a/tpaccept " + p.getName()).create()));
+	    				accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + p.getName()));
+	    				deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§c/tpdeny " + p.getName()).create()));
+	    				deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpdeny " + p.getName()));
 	    				msg.addExtra(accept);
 	    				msg.addExtra(deny);
-	    				sender.spigot().sendMessage(msg);
+	    				tPlayer.spigot().sendMessage(msg);
                     tPlayer.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 2F, 1F);
                     playerToTeleportPlayer.put(p.getName(), tPlayer.getName());
                     p.sendMessage("§aYour teleport request has been sent.");

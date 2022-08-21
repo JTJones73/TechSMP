@@ -16,9 +16,7 @@ public class PetDamage implements Listener{
 @EventHandler                        
     public void onPetDamage(EntityDamageEvent event){
         Entity e = event.getEntity();
-        if(e.getType().equals(EntityType.VILLAGER))
-            event.setCancelled(true);
-        else if(e.getType().equals(EntityType.WOLF)){
+        if(e.getType().equals(EntityType.WOLF)){
             Wolf w = (Wolf) e;
             if(w.isSitting()){
                 event.setCancelled(true);

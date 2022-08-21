@@ -29,7 +29,6 @@ public class Devfeature implements CommandExecutor {
                     as.setLeftArmPose(new EulerAngle(Float.parseFloat(args[0]),Float.parseFloat(args[1]),Float.parseFloat(args[2])));
                     if(args[3].equalsIgnoreCase("a")) {
                     	as.setSmall(true);
-                    	as.
                     }
                     if(args[4].equalsIgnoreCase("a")) {
                     	as.setArms(true);

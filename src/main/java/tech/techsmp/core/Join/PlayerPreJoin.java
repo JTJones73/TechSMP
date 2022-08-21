@@ -98,7 +98,7 @@ public class PlayerPreJoin implements Listener{
                 return;
             }
             else{
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, "§cSorry! This is a whitelisted server please join our discord to request a whitelist\n §eIf you have a friend that is a member have them do /wl " + p.getName().toString() + " \n §7Note: If you join on the universities internet you are whitelisted\n§7Discord: discord.ttumc.net");
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, "§cSorry! This is a whitelisted server please join our discord to request a whitelist\n §eIf you have a friend that is a member have them do /wl " + e.getName() + " \n §7Note: If you join on the universities internet you are whitelisted\n§7Discord: discord.ttumc.net");
             }
 
         }
