@@ -28,9 +28,9 @@ import org.bukkit.inventory.ShapedRecipe;
 
 public class Main extends JavaPlugin implements Listener{
     public ProtocolManager pm;
-        static Main plugin;
-	public void onEnable(){
-                plugin = this;
+    static Main plugin;
+    public void onEnable(){
+        plugin = this;
         Bukkit.getLogger().info("TechSMP By James Jones");
         Bukkit.getServer().getPluginManager().registerEvents(new Chat(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
@@ -46,6 +46,7 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new TabCompleter(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new GuiListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ArmorStandListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new EntityHurtListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
 
 
@@ -70,7 +71,7 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("inspect").setExecutor(new Inspect(this));
         getCommand("tban").setExecutor(new Tban());
         getCommand("rank").setExecutor(new Rank(this));
-        
+
         ItemStack membrane = new ItemStack(Material.PHANTOM_MEMBRANE);
         ShapedRecipe membraneRecipe = new ShapedRecipe(membrane);
         membraneRecipe.shape("FC","SN");
@@ -78,10 +79,10 @@ public class Main extends JavaPlugin implements Listener{
         membraneRecipe.setIngredient('C', Material.CHORUS_FRUIT);
         membraneRecipe.setIngredient('S', Material.STRING);
         getServer().addRecipe(membraneRecipe);
-        
+
     }
     public static Main getInstance(){
         return plugin;
-     }
-    
+    }
+
 }
