@@ -20,11 +20,7 @@ public class EntityHurtListener implements Listener {
 	public void BeeDamaged(EntityDamageEvent event) {
 		if(event.getEntityType() == EntityType.BEE) {
 			if(event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
-				Entity damagedEntity = event.getEntity();
-				Block blockAtDamageLocation = damagedEntity.getWorld().getBlockAt(damagedEntity.getLocation());
-				if(blockAtDamageLocation.getType() == Material.BEEHIVE || blockAtDamageLocation.getType() == Material.BEE_NEST) {
-					event.setCancelled(true);
-				}
+				event.setCancelled(true);
 			}
 		}
 	}
