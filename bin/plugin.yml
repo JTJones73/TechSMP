@@ -1,0 +1,71 @@
+name: TechSMP
+main: tech.techsmp.core.Main
+version: 0.1.0
+api-version: 1.19
+commands:
+   verify:
+      description: Verifies User
+      usage: /verify <player>
+   rank:
+      description: adds rank to user
+      usage: /rank <player> <trusted|admin|owner>
+   wl:
+      description: Temporarily whitelists a player
+      usage: /wl <player>
+   spec:
+      description: Puts a player in spectator mode
+      usage: /spec <on|off> [player]
+   tpa:
+      description: sends teleport request to a player
+      usage: /tpa <player>
+   tpaccept:
+      description: accepts teleport request
+      usage: /tpaccept
+   tpdeny:
+      description: denies teleport request
+      usage: /tpdeny
+   bedtp:
+      description: Teleports you to your bed
+      usage: /bedtp
+   discord:
+      description: Gives link to our discord
+      usage: /discord
+   invsee:
+      description: Allows staff to view player inventories
+      usage: /invsee <player> [-e]
+   roundup:
+      description: Teleports all of your pets to you
+      usage: /roundup
+   fullbright:
+      description: Gives you night vision
+      usage: /fullbright
+   mute:
+      description: Prevents annoying people from being annoying
+      usage: /mute <player>
+   home:
+      description: Currently in development
+      usage: /home <home name>
+   sethome:
+      description: Currently in development
+      usage: /sethome <home name>
+   delhome:
+      description: Currently in development
+      usage: /delhome <home name>
+   back:
+      description: Teleports you to your last location before teleporting
+      usage: /back
+   tp:
+      description: Allows you to teleport to others
+      usage: /tp <player>
+   devfeature:
+      description: used for testing
+      usage: /devfeature <feature>
+   inspect:
+      description: Puts a player in inspect mode
+      usage: /inspect <on|off> [player]
+   tban:
+      description: REALLY prevents annoying people from being annoying
+      usage: /tban <player> reason
+
+
+
