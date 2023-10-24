@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.ConfigMessage;
 import utils.Teleporter;
 
 public class Tpaccept implements CommandExecutor {
@@ -38,7 +39,7 @@ public class Tpaccept implements CommandExecutor {
                 sender.sendMessage("§cYou do not currently have any teleport requests");
         }
         else{
-            sender.sendMessage("§cError: usage /tpaccept <player> (allows a player to teleport to you)");
+            sender.sendMessage(ConfigMessage.getMessage("TPA_TELEPORTING", new String[]{" "}));
         }
         }
         return true;
