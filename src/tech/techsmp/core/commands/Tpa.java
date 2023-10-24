@@ -64,7 +64,7 @@ public class Tpa implements CommandExecutor {
                     }, 3600L);
                 }
                 catch(Exception e){
-                    p.sendMessage(ConfigMessage.getMessage("TPA_ERROR_USAGE", new String[]{" "});
+                    p.sendMessage(ConfigMessage.getMessage("TPA_ERROR_USAGE", new String[]{" "}));
                 }
 
             }
