@@ -98,27 +98,26 @@ public class SpleefListener implements Listener{
 
     }
     public static void removePlayerFromSpleef(Player p){
-        try{
+            try {                                               //for some reason if they are out of the arena this will through null pointer exception
+                if(isEventInSpleefArena(p.getLocation())) {
+                    Teleporter.teleport(p, spleefOffLocation);
+                }
+            }catch (Exception e){
 
-            p.getInventory().setContents(spleefInv.get(p));
 
-            p.getInventory().setArmorContents(spleefArmor.get(p));
-            p.setHealth(spleefHealth.get(p));
-            p.setFoodLevel(spleefHunger.get(p));
-            p.setSaturation(spleefSaturation.get(p));
-            p.setExp(spleefExp.get(p));
-            spleefers.remove(p);
+
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if(removeSpleeferDebounce.contains(p)) removeSpleeferDebounce.remove(p);
-                    try {                                               //for some reason if they are out of the arena this will through null pointer exception
-                        if(isEventInSpleefArena(p.getLocation())) {
-                            Teleporter.teleport(p, spleefOffLocation);
-                        }
-                    }catch (Exception e){
+                    p.getInventory().setContents(spleefInv.get(p));
 
-                    }
+                    p.getInventory().setArmorContents(spleefArmor.get(p));
+                    p.setHealth(spleefHealth.get(p));
+                    p.setFoodLevel(spleefHunger.get(p));
+                    p.setSaturation(spleefSaturation.get(p));
+                    p.setExp(spleefExp.get(p));
+                    spleefers.remove(p);
 
                 }
             }.runTaskLater(Main.getInstance(), 3);
@@ -131,9 +130,6 @@ public class SpleefListener implements Listener{
             spleefExp.remove(p);
             spleefHealth.remove(p);
 
-        }
-        catch (Exception e){
-            e.printStackTrace();
         }
     }
     public static boolean isEventInSpleefArena(Location loc){
