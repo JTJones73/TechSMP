@@ -31,7 +31,7 @@ public class Tpdeny implements CommandExecutor {
                         }
                     }   
                 }
-                p.sendMessage("§cError you do not have a teleport request from " + args[0]);
+                p.sendMessage(ConfigMessage.getMessage("TPDENY_ERROR_NO_TPA", new String[]{args[0]}));
                 return true;
             }
             else{
