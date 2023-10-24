@@ -1,4 +1,5 @@
 package tech.techsmp.core.commands;
+import org.bukkit.GameMode;
 import tech.techsmp.core.Main;
 
 import org.bukkit.Bukkit;
@@ -15,6 +16,13 @@ public class Rank implements CommandExecutor {
     public Rank(Main plugin) {
         this.plugin = plugin;
     }
+    private void giveCoreProtectPerms(Player p){
+        PermissionAttachment attachment = p.addAttachment(plugin);
+
+        attachment.setPermission("coreprotect.inspect", true);
+        attachment.setPermission("coreprotect.rollback", true);
+        attachment.setPermission("coreprotect.lookup", true);
+    }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("Rank")) {
@@ -28,16 +36,21 @@ public class Rank implements CommandExecutor {
                             attachment.setPermission("rank.admin", false);
                             attachment.setPermission("rank.owner", false);
                             attachment.setPermission("rank.trusted", true);
+                            giveCoreProtectPerms(p);
                         }
                         if(args[1].equalsIgnoreCase("admin")){ 
                             attachment.setPermission("rank.admin", true);
                             attachment.setPermission("rank.owner", false);
                             attachment.setPermission("rank.trusted", true);
+                            giveCoreProtectPerms(p);
+
                         }
                         if(args[1].equalsIgnoreCase("owner")){ 
                             attachment.setPermission("rank.admin", true);
                             attachment.setPermission("rank.owner", true);
                             attachment.setPermission("rank.trusted", true);
+                            giveCoreProtectPerms(p);
+
                         }
                         sender.sendMessage("§aPlayer " + p.getName().toString() + " has Has been given rank of " + args[1].toLowerCase());
                     }

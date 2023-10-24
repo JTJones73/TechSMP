@@ -63,11 +63,11 @@ public class PlayerPreJoin implements Listener{
     							allowedJoin = true;
     							return;
     					}
-        				scanner.close();
-
     				}
+					scanner.close();
 
-    			} catch (FileNotFoundException exception) {
+
+				} catch (FileNotFoundException exception) {
     				exception.printStackTrace();
     			}
 
@@ -90,7 +90,7 @@ public class PlayerPreJoin implements Listener{
             }
             if(e.getAddress().toString().startsWith("/149.149.2.")){
                 e.allow();
-                p.setWhitelisted(false);
+                //p.setWhitelisted(false);
                 return;
             }
             if(wl.isPlayerWhitelisted(e.getName().toString().toLowerCase())){

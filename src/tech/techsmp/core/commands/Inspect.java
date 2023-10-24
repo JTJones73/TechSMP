@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
 import tech.techsmp.core.Main;
-
+import utils.Teleporter;
 
 
 public class Inspect implements CommandExecutor {
@@ -29,13 +29,15 @@ public class Inspect implements CommandExecutor {
             sender.sendMessage("§cSorry! you do not have permission to use this command");
             return true;
         }
-        if(args.length == 1){
+        sender.sendMessage("§cThis has been replaced with just spectator mode /spec <on|off>");
+        return true;
+
+        /*if(args.length == 1){
             if(sender instanceof Player){
                 if(args[0].equalsIgnoreCase("on")){
                     Player p = (Player) sender;
                 	if(Spec.specOnLocation.containsKey(p)) {
                 		p.sendMessage("§cYou cannot use inspect in this mode!");
-                		Spec.specOnLocation.put(p,p.getLocation());
                 	}
                 	else {
 
@@ -56,7 +58,8 @@ public class Inspect implements CommandExecutor {
                         p.setGameMode(GameMode.SURVIVAL);
                         PermissionAttachment pA = p.addAttachment(plugin);
                     	try {
-                    		p.teleport(Spec.specOnLocation.get(p));
+                            Teleporter.teleport(p, Spec.specOnLocation.get(p));
+                    		//p.teleport(Spec.specOnLocation.get(p));
                     		Spec.specOnLocation.remove(p);
                     	}
                     	catch(Exception ex) {}
@@ -106,7 +109,8 @@ public class Inspect implements CommandExecutor {
                     pA.setPermission("coreprotect.rollback", false);
                     pA.setPermission("coreprotect.inspect", false);
                 	try {
-                		p.teleport(Spec.specOnLocation.get(p));
+                        Teleporter.teleport(p, Spec.specOnLocation.get(p));
+                        //p.teleport(Spec.specOnLocation.get(p));
                 		Spec.specOnLocation.remove(p);
                 	}
                 	catch(Exception ex) {}
@@ -126,7 +130,7 @@ public class Inspect implements CommandExecutor {
             sender.sendMessage("§cError usage: /inspect <on|off> player");
         }
     
-        return true;
+        return true;*/
     }
 }
 

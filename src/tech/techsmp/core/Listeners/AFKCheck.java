@@ -1,5 +1,7 @@
 package tech.techsmp.core.Listeners;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +34,7 @@ public class AFKCheck implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+
         lastActivity.put(player.getUniqueId(), System.currentTimeMillis());
     }
 

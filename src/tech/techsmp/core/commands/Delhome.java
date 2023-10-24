@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import utils.ConfigMessage;
 
 public class Delhome implements CommandExecutor {
 	File homes = new File("/home/container/plugins/TechSMP/homes.yml");
@@ -36,13 +37,13 @@ public class Delhome implements CommandExecutor {
 				exception.printStackTrace();
 			}
 			if(!hasHome) {
-				sender.sendMessage("§cYou do not have a home by the name of " + args[0]);
+				sender.sendMessage(ConfigMessage.getMessage("DEL_NO_HOME_BY_NAME", new String[]{args[0]}));
 			}
 			else {
 				try {
 				    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/homes.yml", false); //the true will append the new data
 				    fw.write(homesList);//appends the string to the file
-				    p.sendMessage("§aSuccessfully deleted home named " + args[0]);
+				    p.sendMessage(ConfigMessage.getMessage("DEL_DELETED", new String[]{args[0]}));
 				    fw.close();
 				}
 				catch(IOException ioe)
@@ -52,7 +53,7 @@ public class Delhome implements CommandExecutor {
 			}
 		}
 		else
-			sender.sendMessage("§cError usage: /delhome <home name>");
+			sender.sendMessage(ConfigMessage.getMessage("DELHOME_ERROR_USAGE", new String[]{args[0]}));
 		return true;
 	}
 

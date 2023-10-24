@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import utils.ConfigMessage;
+import utils.Teleporter;
 
 public class Back implements CommandExecutor {
 
@@ -13,11 +15,12 @@ public class Back implements CommandExecutor {
 		if (cmd.getName().equalsIgnoreCase("back")){
 			Player p = (Player) sender;
 			if(PlayerTeleport.playerLastTpByUUID.containsKey(p.getUniqueId().toString())) {
-				p.sendMessage("§aTeleporting...");
-				p.teleport(PlayerTeleport.playerLastTpByUUID.get(p.getUniqueId().toString()));
+				p.sendMessage(ConfigMessage.getMessage("BACK_TELEPORT", new String[]{" "}));
+				Teleporter.teleport(p, PlayerTeleport.playerLastTpByUUID.get(p.getUniqueId().toString()));
+				//p.teleport(PlayerTeleport.playerLastTpByUUID.get(p.getUniqueId().toString()));
 			}
 			else {
-				p.sendMessage("§cSorry we do not remember where you were. The question is do you?");
+				p.sendMessage(ConfigMessage.getMessage("BACK_FAILED", new String[]{" "}));
 			}
         }  
         return true;  

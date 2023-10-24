@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.Teleporter;
 
 public class Tpaccept implements CommandExecutor {
 
@@ -21,7 +22,9 @@ public class Tpaccept implements CommandExecutor {
                 if(set.getValue().equalsIgnoreCase(p.getName()) && args[0].equalsIgnoreCase(set.getKey())){
                     try{
                         isCompleted = true;
-                        (Bukkit.getServer().getPlayer(set.getKey())).teleport(p.getLocation());
+                        Teleporter.teleport((Bukkit.getServer().getPlayer(set.getKey())), p.getLocation());
+
+                        //(Bukkit.getServer().getPlayer(set.getKey())).teleport(p.getLocation());
                         Tpa.playerToTeleportPlayer.remove(set.getKey());
                         p.sendMessage("§aTeleporting...");
                         break;

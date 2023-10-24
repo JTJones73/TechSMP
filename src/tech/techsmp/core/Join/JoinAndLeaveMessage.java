@@ -41,10 +41,15 @@ public class JoinAndLeaveMessage implements Listener{
         Player p = event.getPlayer();
         if(p.hasPermission("rank.admin") && !v.handleAdmin(p, false, true)) {
         	event.setQuitMessage(null);
-	        Logger.getLogger("Minecraft").info("§cPlayer " + p.getName() + " silently left the game.");
+            Bukkit.getConsoleSender().sendMessage("§cPlayer " + p.getName() + " silently left the game.");
 
         }
         else {
+            for(Player vanishedPlayer: Bukkit.getOnlinePlayers()){
+                if(v.isPlayerVanished(vanishedPlayer)){
+                    p.hidePlayer(vanishedPlayer);
+                }
+            }
         	event.setQuitMessage("§7(§c-§7) §c" + p.getName());
         }
         if(Spec.specOnLocation.containsKey(p)) {

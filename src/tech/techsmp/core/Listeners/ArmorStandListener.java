@@ -442,7 +442,7 @@ public class ArmorStandListener implements Listener{
     					as.setHeadPose(new EulerAngle(as.getHeadPose().getX() - 0.3925, as.getHeadPose().getY(), as.getHeadPose().getZ()));
     				}
     				else {
-            			Bukkit.getLogger().info("" + pitch);
+						//Bukkit.getConsoleSender().sendMessage("" + pitch);
     					as.setHeadPose(new EulerAngle(0, as.getHeadPose().getY(), as.getHeadPose().getZ()));
     				}
     			}

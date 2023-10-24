@@ -1,4 +1,5 @@
 package tech.techsmp.core.commands;
+import org.bukkit.Bukkit;
 import tech.techsmp.core.Join.PlayerPreJoin;
 
 import java.util.logging.Logger;
@@ -16,7 +17,7 @@ public class Unmute implements CommandExecutor {
             if(args.length == 1) {
                 try {
                     Chat.Muted.remove(args[0].toLowerCase());
-                    Logger.getLogger("Minecraft").info("§c" + args[0] + " has been unmuted by " + sender.getName());
+                    Bukkit.getConsoleSender().sendMessage("§c" + args[0] + " has been unmuted by " + sender.getName());
                     sender.sendMessage("§cUnmuted " + args[0]);
 
                 }

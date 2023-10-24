@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import utils.ConfigMessage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -36,7 +37,7 @@ public class Homes implements CommandExecutor {
 			if(args.length == 0)
 				noArgs = true;
 			if(args.length > 1)
-				sender.sendMessage("§cError usage: /home <home name>");
+				sender.sendMessage(ConfigMessage.getMessage("HOME_ERROR_USAGE", new String[]{" "}));
 			try {
 				Scanner scanner = new Scanner(homes);
 				while (scanner.hasNextLine()) {
@@ -86,7 +87,7 @@ public class Homes implements CommandExecutor {
 
 				}
 				if(numHomes >= 1 && args.length == 0) {
-					p.sendMessage("§aTeleporting...");
+					p.sendMessage(ConfigMessage.getMessage("HOME_TELEPORTED", new String[]{homeName}));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 255));
 					p.teleport(new Location(Bukkit.getWorld(world), x, y , z));
 				}
@@ -96,9 +97,9 @@ public class Homes implements CommandExecutor {
 					p.teleport(new Location(Bukkit.getWorld(world), x, y , z));	
 				}
 				else if(numHomes == 0)
-					p.sendMessage("§cYou do not have any homes set use /sethome <home name>");
+					p.sendMessage(ConfigMessage.getMessage("HOME_TELEPORTED", new String[]{homeName}));
 				else
-					p.sendMessage("§cCould not find a home by that name use /sethome <home name> \n §eAvailible homes: " + homeList);
+					p.sendMessage(ConfigMessage.getMessage("HOME_COULD_NOT_FIND_HOME", new String[]{homeList}));
 				scanner.close();
 			} catch (FileNotFoundException exception) {
 				exception.printStackTrace();

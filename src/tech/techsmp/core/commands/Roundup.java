@@ -10,6 +10,7 @@ import org.bukkit.entity.Parrot;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.ConfigMessage;
 
 public class Roundup implements CommandExecutor {
 
@@ -18,7 +19,7 @@ public class Roundup implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("roundup")){
             if(sender instanceof Player){
                 Player p = (Player) sender;
-                p.sendMessage("§aTrying to locate your pets (note: this is on a  best effort basis and may only work if the pet is in render distance)");
+                p.sendMessage(ConfigMessage.getMessage("ROUNDUP_TRYING_TO_FIND_PETS", new String[]{" "}));
                 int foundPets  = 0;
                 for(World w : Bukkit.getWorlds()) {
                     for(Entity e : w.getEntitiesByClasses(Wolf.class)) {
@@ -50,7 +51,7 @@ public class Roundup implements CommandExecutor {
                                 }
                             }
                         }
-                        p.sendMessage("§aFound " + foundPets + " pets if you are stil missing pets check the floation animal shelter at 0,0 and near your bed. You may periodically retry this command"); 
+                        p.sendMessage(ConfigMessage.getMessage("ROUNDUP_FOUNDPETS", new String[]{foundPets + ""}));
             }
         }
         return true;

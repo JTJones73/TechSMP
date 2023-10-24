@@ -1,5 +1,10 @@
 package tech.techsmp.core.commands;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.GameRule;
+import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Join.PlayerPreJoin;
+import tech.techsmp.core.Main;
 import tech.techsmp.core.cosmetic.Chat;
 
 import java.util.logging.Logger;
@@ -44,8 +49,21 @@ public class Vanish implements CommandExecutor {
 	    }
 	    inVanish.add(p);
 	    p.setCollidable(false);
+
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(isPlayerVanished(p)){
+					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§cYou are currently in §4§lVanish §ado /v to exit vanish"));
+				}
+				else{
+					cancel();
+				}
+			}
+		}.runTaskTimer(Main.getInstance(), 0, 5);
+
 	    p.sendMessage("§aYou are now in vanish.");
-        Logger.getLogger("Minecraft").info("§aPlayer " + p.getName() + " is now in vanish.");
+		Bukkit.getConsoleSender().sendMessage("§aPlayer " + p.getName() + " is now in vanish.");
 
 	}
 	public void unVanishPlayer(Player p) {
@@ -53,9 +71,10 @@ public class Vanish implements CommandExecutor {
 		    for(Player target : Bukkit.getOnlinePlayers()){
 		        	target.showPlayer(p);
 		    }
+			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(""));
 		    p.setCollidable(true);
 		    p.sendMessage("§cYou are no longer in vanish.");
-	        Logger.getLogger("Minecraft").info("§cPlayer " + p.getName() + " is no longer in vanish.");
+			Bukkit.getConsoleSender().sendMessage("§cPlayer " + p.getName() + " is no longer in vanish.");
 	        if(needLogonMsg.contains(p)) {
 	    	    for(Player lPlayer : Bukkit.getOnlinePlayers()){
 	    	    	lPlayer.sendMessage("§7(§a+§7) §a" + p.getName());

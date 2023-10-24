@@ -1,4 +1,5 @@
 package tech.techsmp.core.commands;
+import org.bukkit.Bukkit;
 import tech.techsmp.core.Join.PlayerPreJoin;
 
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ public class Unban implements CommandExecutor {
             if(args.length == 1) {
                 try {
                     PlayerPreJoin.banList.remove(args[0].toLowerCase());
-                    Logger.getLogger("Minecraft").info("§c" + args[0] + " has been unbanned by " + sender.getName());
+                    Bukkit.getConsoleSender().sendMessage("§c" + args[0] + " has been unbanned by " + sender.getName());
                     sender.sendMessage("§cUnbanned " + args[0]);
                 }
                 catch(Exception exception){

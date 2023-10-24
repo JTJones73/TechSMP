@@ -1,4 +1,6 @@
 package tech.techsmp.core.Join;
+import org.bukkit.GameRule;
+import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Main;
 import tech.techsmp.core.Join.PlayerPreJoin;
 
@@ -14,6 +16,7 @@ import java.util.Scanner;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import tech.techsmp.core.commands.Vanish;
 
 
 public class PlayerPostJoin implements Listener{
@@ -21,8 +24,23 @@ public class PlayerPostJoin implements Listener{
     @EventHandler
 	public void postJoinEvent(PlayerLoginEvent e){
         Player p = e.getPlayer();
+
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if(!p.hasPermission("rank.admin")){
+					Vanish v = new Vanish();
+					for(Player vanishedPlayer: Bukkit.getOnlinePlayers()){
+						if(v.isPlayerVanished(vanishedPlayer)){
+							p.hidePlayer(vanishedPlayer);
+						}
+					}
+				}
+			}
+		}.runTaskLater(Main.getInstance(),5);
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-            
+
             @Override
                 public void run() {
             	if(p.isOnline() && PlayerPreJoin.bedrockWhitelist.contains(p.getName())) {

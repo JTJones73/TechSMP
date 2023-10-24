@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import utils.DiscordWebhook;
 
 
 public class MineAlerts implements Listener{
@@ -19,7 +20,8 @@ public class MineAlerts implements Listener{
     	boolean unexposed = true;
         Block block = event.getBlock();
 
-        if (block.getLocation().getBlockY() <= 14 && (block.getType() == Material.STONE || block.getType() == Material.DEEPSLATE)) {
+        if (block.getLocation().getBlockY() <= 14 && (block.getType() == Material.STONE || block.getType() == Material.DEEPSLATE ||
+                block.getType() == Material.TUFF || block.getType() == Material.ANDESITE || block.getType() == Material.DIORITE || block.getType() == Material.ANDESITE)) {
             for (Block adjacentBlock : getAdjacentBlocks(block)) {
                 if ((adjacentBlock.getType() == Material.DIAMOND_ORE || adjacentBlock.getType() == Material.DEEPSLATE_DIAMOND_ORE)) {
                 	foundBlock = true;
@@ -28,7 +30,15 @@ public class MineAlerts implements Listener{
                     	if (airBlock.getType() == Material.AIR && airBlock.getLocation() != block.getLocation()){
                     		unexposed = false;
                     		return;
-                    	}
+                    	} else if (airBlock.getType() == Material.DEEPSLATE_DIAMOND_ORE || airBlock.getType() == Material.DIAMOND_ORE) {
+                            for (Block  duplicateCheckBlock : getAdjacentBlocks(airBlock)) {
+
+                                if (duplicateCheckBlock.getType() == Material.AIR && duplicateCheckBlock.getLocation() != block.getLocation()) {
+                                    unexposed = false;
+                                    return;
+                                }
+                            }
+                        }
                     }
                     }
                 }
@@ -39,7 +49,9 @@ public class MineAlerts implements Listener{
                     		+ ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
                 }
             }
-        	Logger.getLogger("Minecraft").info("§a" + event.getPlayer().getName() + " §7=> §e§lUnexposed §bDiamond Ore §7[" + block.getLocation().getBlockX()
+                DiscordWebhook.sendDiscordMsg("", "Cheat", event.getPlayer().getName() + " Unexposed Ore", "Unexposed Diamond Ore [" + block.getLocation().getBlockX()
+                        + ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
+                Bukkit.getConsoleSender().sendMessage("§a" + event.getPlayer().getName() + " §7=> §e§lUnexposed §bDiamond Ore §7[" + block.getLocation().getBlockX()
             		+ ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
             }
         }

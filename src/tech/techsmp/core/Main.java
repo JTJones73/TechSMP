@@ -1,14 +1,16 @@
 package tech.techsmp.core;
+import org.bukkit.Location;
+import tech.techsmp.core.Packet.SpecPacketBlocker;
 import tech.techsmp.core.cosmetic.*;
 import tech.techsmp.core.commands.*;
 import tech.techsmp.core.Listeners.*;
-/*
+
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;*/
+import com.comphenix.protocol.events.PacketEvent;
 
 
 
@@ -22,17 +24,23 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-
-
+import utils.Teleporter;
+import utils.TimeController;
 
 
 public class Main extends JavaPlugin implements Listener{
-   // public ProtocolManager pm;
+    static ProtocolManager pm;
+    public static Location spawnLoc = new Location(Bukkit.getWorld("world"), -95, 85,0);
+
         static Main plugin;
+        SpecPacketBlocker spb = new SpecPacketBlocker();
 
 	public void onEnable(){
+                pm = ProtocolLibrary.getProtocolManager();
+
                 plugin = this;
-        Bukkit.getLogger().info("TechSMP By James Jones");
+                TimeController.timerTask();
+        Bukkit.getConsoleSender().sendMessage("TechSMP By James Jones");
         Bukkit.getServer().getPluginManager().registerEvents(new Chat(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPostJoin(), this);
@@ -43,19 +51,22 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new EntityHurtListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new AFKCheck(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new JoinAndLeaveMessage(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
+         Bukkit.getServer().getPluginManager().registerEvents(new Teleporter(), this);
+         Bukkit.getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new CreeperExplosion(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PetDamage(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SpawnProtection(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PetToggleSit(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new TabCompleter(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new TimeController(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new GuiListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SpleefListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ArmorStandListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EnderManGreif(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
 
 
-
+        getCommand("spleef").setExecutor(new Spleef());
         getCommand("discord").setExecutor(new Discord());
         getCommand("vanish").setExecutor(new Vanish());
         getCommand("devfeature").setExecutor(new Devfeature());
@@ -71,6 +82,7 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("bedtp").setExecutor(new BedTP());
         getCommand("verify").setExecutor(new Verify());
         getCommand("wl").setExecutor(new Whitelist());
+         getCommand("tc").setExecutor(new Trustedchat());
         getCommand("tpa").setExecutor(new Tpa());
         getCommand("spawn").setExecutor(new Spawn());
         getCommand("tpaccept").setExecutor(new Tpaccept());
@@ -80,7 +92,10 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("tban").setExecutor(new Tban());
          getCommand("unban").setExecutor(new Unban());
          getCommand("rank").setExecutor(new Rank(this));
-        
+
+         //Packet Listeners
+        spb.onSpecPacket();
+
         ItemStack membrane = new ItemStack(Material.PHANTOM_MEMBRANE);
         ShapedRecipe membraneRecipe = new ShapedRecipe(membrane);
         membraneRecipe.shape("FC","SN");
@@ -90,8 +105,14 @@ public class Main extends JavaPlugin implements Listener{
         getServer().addRecipe(membraneRecipe);
         
     }
+    public void onDisable(){
+        spb.stopBlockingPackets();
+    }
     public static Main getInstance(){
         return plugin;
      }
-    
+    public static ProtocolManager getProtocolManager(){
+        return pm;
+    }
+
 }

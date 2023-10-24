@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import tech.techsmp.core.commands.Spec;
+import utils.Teleporter;
 
 import static java.lang.Integer.parseInt;
 
@@ -39,10 +40,6 @@ public class SpecTP implements Listener{
              return;
 
             }
-          if(event.getMessage().toLowerCase().startsWith("/co i") && !event.getMessage().equals("/co i dontdothis")) {
-        	  event.setCancelled(true);
-        	  event.getPlayer().sendMessage("§cPlease use /inspect <on|off>");
-          }
       }
       if(!event.getPlayer().isOp()){
           if(event.getMessage().toLowerCase().startsWith("/whitelist")){
@@ -66,7 +63,8 @@ public class SpecTP implements Listener{
                 String[] playerName = event.getMessage().split(" ");
                 try{
                     Player tp = Bukkit.getServer().getPlayer(playerName[1]);
-                    p.teleport(tp.getLocation());
+                    Teleporter.teleport(p, tp.getLocation());
+                    //p.teleport(tp.getLocation());
                     p.sendMessage("§aTeleporting you to " + tp.getName());
                 }
                 catch(Exception e){
@@ -76,7 +74,9 @@ public class SpecTP implements Listener{
             else if(event.getMessage().split(" ").length == 4){
                 String[] location = event.getMessage().split(" ");
                 try{
-                    p.teleport(new Location(Bukkit.getWorld("world"), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
+                    Teleporter.teleport(p, (new Location(Bukkit.getWorld("world"), parseInt(location[1]), parseInt(location[2]), parseInt(location[3]))));
+
+                    //p.teleport(new Location(Bukkit.getWorld("world"), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
                 }
                 catch (Exception e){
                     p.sendMessage("§cError: could not find location");
@@ -86,6 +86,7 @@ public class SpecTP implements Listener{
             else if(event.getMessage().split(" ").length == 5){
                 String[] location = event.getMessage().split(" ");
                 try{
+                    Teleporter.teleport(p, new Location(Bukkit.getWorld(location[4]), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
                     p.teleport(new Location(Bukkit.getWorld(location[4]), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
                 }
                 catch (Exception e){

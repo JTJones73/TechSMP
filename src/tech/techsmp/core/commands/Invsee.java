@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.ConfigMessage;
 
 public class Invsee implements CommandExecutor {
 
@@ -27,11 +28,14 @@ public class Invsee implements CommandExecutor {
                                 inv.setItem(i, target.getInventory().getItem(i));
                             }
                         }
+                        if(target.getInventory().getItemInOffHand() != null && !target.getInventory().getItemInOffHand().getType().equals(Material.AIR)){
+                            inv.setItem(44, target.getInventory().getItemInOffHand());
+                        }
                         GuiListener.inGui.add(p);
                         p.openInventory(inv);;	
                 	}
                 	catch(Exception ex) {
-                		sender.sendMessage("§cError: no such player");
+                		sender.sendMessage(ConfigMessage.getMessage("INVSEE_NO_SUCH_PLAYER", new String[]{" "}));
                 	}
 
                 }
@@ -43,12 +47,12 @@ public class Invsee implements CommandExecutor {
 	                    p.openInventory(target.getEnderChest());
                 	}
                 	catch(Exception ex) {
-                		sender.sendMessage("§cError: no such player");
+                		sender.sendMessage(ConfigMessage.getMessage("INVSEE_NO_SUCH_PLAYER", new String[]{" "}));
                 	}
                 }
             }
             else {
-                sender.sendMessage("§cSorry! you do not have permission to use this command");
+                sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{" "}));
             }
 
         }  

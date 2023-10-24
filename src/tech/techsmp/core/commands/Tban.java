@@ -10,6 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import utils.ConfigMessage;
+import utils.DiscordWebhook;
 
 public class Tban implements CommandExecutor {
 
@@ -25,19 +27,20 @@ public class Tban implements CommandExecutor {
 							else reason = reason +  " " + args[i];
 						}
 						PlayerPreJoin.banList.put(p.getName().toLowerCase(), args[1]);
-						sender.sendMessage("§a" + p.getName() + " has been banned!");
+						sender.sendMessage(ConfigMessage.getMessage("TBAN_PLAYER_BANNED", new String[]{" "}));
+						DiscordWebhook.sendDiscordMsg("", "Player Banned", p.getName() + " banned by " + sender.getName(), "Reason: " + reason);
 						p.kickPlayer("§cYou are banned from this server. \n §7Reason: " + reason + "\n §ePlease message an admin on our discord to be given an unban date\n§7Discord: discord.ttumc.net");
-			            Logger.getLogger("Minecraft").info("§c" + p.getName() + " has been Banned by " + sender.getName() + " for reason: " + reason);
+						Bukkit.getConsoleSender().sendMessage("§c" + p.getName() + " has been Banned by " + sender.getName() + " for reason: " + reason);
 					}
 					catch(Exception exception){
-						sender.sendMessage("§cError could not find player " + args[0]);
+						sender.sendMessage(ConfigMessage.getMessage("TBAN_ERROR_NO_PLAYER", new String[]{args[1]}));
 					}
 				}
 				else {
-					sender.sendMessage("§cError usage: /tban <player> <reason>");
+					sender.sendMessage(ConfigMessage.getMessage("TBAN_ERROR_USAGE", new String[]{" "}));
 				}
 			}
-			else sender.sendMessage("§cSorry! you do not have permission to use this command");
+			else sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{" "}));
 		return true;
 	}
 }

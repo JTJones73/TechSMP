@@ -19,6 +19,9 @@ public class SleepingPercent implements Listener{
 	static AFKCheck afk = new AFKCheck();
 	static int numNotCounted = 0;
 
+	static int numCounted = 0;
+
+
 
 
 	@EventHandler
@@ -29,12 +32,12 @@ public class SleepingPercent implements Listener{
     		numSleeping = numSleeping + 1;
 			numNotCounted = 0;
 			for(Player afkPlayer : Bukkit.getOnlinePlayers()){
-				if(afk.isPlayerAFK(afkPlayer) || !afkPlayer.getGameMode().equals(GameMode.SURVIVAL)){
-					numNotCounted++;
+				if(!afk.isPlayerAFK(afkPlayer) && afkPlayer.getGameMode().equals(GameMode.SURVIVAL) &&  afkPlayer.getLocation().getWorld().getName().equals("World")){
+					numCounted++;
 				}
 			}
 
-			if(Bukkit.getOnlinePlayers().size() - ((Bukkit.getOnlinePlayers().size() - numNotCounted) / 2) <= numSleeping) {
+			if(Bukkit.getOnlinePlayers().size() - ((numCounted) / 2) <= numSleeping) {
     			w.setGameRule(GameRule.PLAYERS_SLEEPING_PERCENTAGE, -1);
     		}
     		else

@@ -22,7 +22,7 @@ public class Chat implements Listener{
         Player p = e.getPlayer();
     	if(Muted.contains(p.getName().toLowerCase())){
     		p.sendMessage("§cSorry! You are muted and cannot talk in chat.");
-            Bukkit.getLogger().info("[Muted] " + p.getName() +": " + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage("[Muted] " + p.getName() +": " + e.getMessage());
             e.setCancelled(true);
             return;
     	}
@@ -31,7 +31,7 @@ public class Chat implements Listener{
         	for(Player iPlayer : Bukkit.getOnlinePlayers()){
             	iPlayer.sendMessage("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
             }
-            Bukkit.getLogger().info("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
+            Bukkit.getConsoleSender().sendMessage("§8[§cOwner§8] §f" + p.getName().toString() + " » " + message);
 
         }
         else if(p.hasPermission("rank.admin")){
@@ -39,7 +39,7 @@ public class Chat implements Listener{
         	for(Player iPlayer : Bukkit.getOnlinePlayers()){
             	iPlayer.sendMessage("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
             }
-            Bukkit.getLogger().info("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
+            Bukkit.getConsoleSender().sendMessage("§8[§6Admin§8] §f" + p.getName().toString() + " » " + message);
 
         }
         else if(p.hasPermission("rank.trusted")){
@@ -47,7 +47,7 @@ public class Chat implements Listener{
         	for(Player iPlayer : Bukkit.getOnlinePlayers()){
             	iPlayer.sendMessage("§e§l✩§f §r" + p.getName().toString() + " » " + message);
             }
-            Bukkit.getLogger().info("§e§l✩§f §r" + p.getName().toString() + " » " + message);
+            Bukkit.getConsoleSender().sendMessage("§e§l✩§f §r" + p.getName().toString() + " » " + message);
 
         }
         else if(p.isWhitelisted()){
@@ -55,7 +55,7 @@ public class Chat implements Listener{
         	for(Player iPlayer : Bukkit.getOnlinePlayers()){
             	iPlayer.sendMessage(p.getName().toString() + " » " + e.getMessage());
             }
-            Bukkit.getLogger().info(p.getName().toString() + " » " + e.getMessage());
+            Bukkit.getConsoleSender().sendMessage(p.getName().toString() + " » " + e.getMessage());
 
         }
         else{
@@ -63,7 +63,7 @@ public class Chat implements Listener{
         	for(Player iPlayer : Bukkit.getOnlinePlayers()){
             	iPlayer.sendMessage("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
             }
-            Bukkit.getLogger().info("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
+            Bukkit.getConsoleSender().sendMessage("§8[Guest]§7§o" + p.getName().toString() + " » §r" + message);
 
 
         }
