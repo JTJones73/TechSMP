@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.ConfigMessage;
 
 public class Tpdeny implements CommandExecutor {
 
@@ -22,7 +23,7 @@ public class Tpdeny implements CommandExecutor {
                         try{
                             Tpa.playerToTeleportPlayer.remove(set.getKey());
                             (Bukkit.getServer().getPlayer(set.getKey())).sendMessage("§c" + p.getName() + " has denied your teleport request");
-                            p.sendMessage("§cYou have denied " + set.getKey() + "'s teleport request");
+                            p.sendMessage(ConfigMessage.getMessage("TPDENY_YOU_DENIED", new String[]{set.getKey()}));
                             return true;
                         }
                         catch(Exception e){
