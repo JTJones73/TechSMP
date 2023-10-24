@@ -64,7 +64,7 @@ public class Tpa implements CommandExecutor {
                     }, 3600L);
                 }
                 catch(Exception e){
-                    p.sendMessage("§cError usage: /tpa <player> (allows you to teleport to a player by sending a request)");
+                    p.sendMessage(ConfigMessage.getMessage("TPA_ERROR_USAGE", new String[]{" "});
                 }
 
             }
