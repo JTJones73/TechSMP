@@ -77,7 +77,7 @@ commands:
       description: Teleports you to world spawn
       usage: /spawn
    tc:
-      description: Allows you to chat in Trusted Chat
+      description: Allows trusted to chat in Trusted Chat
       usage: /tc <message>
    vanish:
       description: Toggles Vanish
