@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.OfflinePlayer;
+import utils.ConfigMessage;
 
 public class Verify implements CommandExecutor {
 
@@ -22,13 +23,13 @@ public class Verify implements CommandExecutor {
                         OfflinePlayer p = Bukkit.getServer().getOfflinePlayer(args[0]);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + p.getName());
                         if(p.isWhitelisted())
-                        	sender.sendMessage("§aPlayer " + p.getName().toString() + " has been verified!");
+                        	sender.sendMessage(ConfigMessage.getMessage("VERIFY_PLAYER_VERIFIED", new String[]{p.getName()}));
                         else
-                            sender.sendMessage("§cError: Could not find player");
+                            sender.sendMessage(ConfigMessage.getMessage("VANISH_YOU_ARE_NOT_VANISHED", new String[]{" "}));
 
                     }
                     catch(Exception e){
-                        sender.sendMessage("§cError: Could not find player");
+                        sender.sendMessage(ConfigMessage.getMessage("VERIFY_ERROR_NO_PLAYER", new String[]{" "}));
                     }
                 }
                 	else{

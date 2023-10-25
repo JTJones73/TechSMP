@@ -35,7 +35,7 @@ public class Tpdeny implements CommandExecutor {
                 return true;
             }
             else{
-                sender.sendMessage("§cError usage: /tpdeny <player> (denies a teleport request)");
+                sender.sendMessage(ConfigMessage.getMessage("TPDENY_ERROR_USAGE", new String[]{""}));
                 return true;
             }
         }

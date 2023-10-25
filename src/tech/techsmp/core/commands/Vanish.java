@@ -16,6 +16,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import utils.ConfigMessage;
 
 import java.util.LinkedList;
 
@@ -54,7 +55,7 @@ public class Vanish implements CommandExecutor {
 			@Override
 			public void run() {
 				if(isPlayerVanished(p)){
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§cYou are currently in §4§lVanish §ado /v to exit vanish"));
+					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ConfigMessage.getMessage("VANISH_ACTION_BAR", new String[]{" "})));
 				}
 				else{
 					cancel();
@@ -73,7 +74,7 @@ public class Vanish implements CommandExecutor {
 		    }
 			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(""));
 		    p.setCollidable(true);
-		    p.sendMessage("§cYou are no longer in vanish.");
+		    p.sendMessage(ConfigMessage.getMessage("VANISH_YOU_ARE_NOT_VANISHED", new String[]{" "}));
 			Bukkit.getConsoleSender().sendMessage("§cPlayer " + p.getName() + " is no longer in vanish.");
 	        if(needLogonMsg.contains(p)) {
 	    	    for(Player lPlayer : Bukkit.getOnlinePlayers()){
