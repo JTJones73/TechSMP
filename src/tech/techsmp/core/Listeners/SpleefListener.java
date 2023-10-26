@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Main;
+import utils.ConfigMessage;
 import utils.Teleporter;
 
 
@@ -30,6 +31,8 @@ public class SpleefListener implements Listener{
     public static Map<Player, Double> spleefHealth = new HashMap<>();
     public static Map<Player, Integer> spleefHunger = new HashMap<>();
     public static Map<Player, Float> spleefSaturation = new HashMap<>();
+    public static Map<Player, Integer> spleefStreak = new HashMap<>();
+
     public static Map<Player, Float> spleefExp = new HashMap<>();
     public static LinkedList<Player> spleefers = new LinkedList<>();
     private LinkedList<Player> fallListener = new LinkedList<>();
@@ -37,6 +40,7 @@ public class SpleefListener implements Listener{
     int spleefLayer = 100;
     public static Location spleefOffLocation = new Location(Bukkit.getWorld("world"), -106, 103.5, 29.5);
     public static boolean isSpleefEnabled = true;
+    public static boolean broadcastSpleefs = false;
     public static LinkedList<Player> removeSpleeferDebounce = new LinkedList<>();
 
 
@@ -266,6 +270,19 @@ public class SpleefListener implements Listener{
                             spleeferP.sendMessage(ChatColor.AQUA + "You spleefed " + p.getName());
                             spleeferP.playSound(spleeferP.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
                             p.sendMessage(ChatColor.AQUA + "You got spleefed by " + spleeferP.getName());
+                            if(spleefStreak.containsKey(spleeferP)){
+                                spleefStreak.replace(spleeferP, spleefStreak.get(spleeferP) + 1);
+                            }
+                            else{
+                                spleefStreak.put(spleeferP, 1);
+                            }
+                        }
+                        if(broadcastSpleefs) {
+                            if (spleefStreak.containsKey(p)) {
+                                Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_SPLEEF_BROADCAST", new String[]{p.getName(), spleeferP.getName(), spleefStreak.get(p) + ""}));
+                                spleefStreak.remove(p);
+                            } else
+                                Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_SPLEEF_BROADCAST", new String[]{p.getName(), spleeferP.getName(), 0 + ""}));
                         }
                     }
                     removeSpleeferDebounce.add(p);

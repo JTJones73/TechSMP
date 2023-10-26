@@ -29,6 +29,22 @@ public class Spleef implements CommandExecutor {
 
                     SpleefListener.enableSpleef();
                 }
+
+            }
+            else if(args.length == 2){
+                if(args[0].equalsIgnoreCase("broadcastspleefs")){
+                    if(args[1].equalsIgnoreCase("on")){
+                        SpleefListener.broadcastSpleefs = true;
+                        Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_BROADCAST_ON", new String[]{" "}));
+
+                    }
+                    if(args[1].equalsIgnoreCase("off")){
+                        SpleefListener.broadcastSpleefs = false;
+                        Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_BROADCAST_OFF", new String[]{" "}));
+
+
+                    }
+                }
             }
         }
         return true;
