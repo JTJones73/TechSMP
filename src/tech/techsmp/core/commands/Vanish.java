@@ -78,7 +78,7 @@ public class Vanish implements CommandExecutor {
 			Bukkit.getConsoleSender().sendMessage("§cPlayer " + p.getName() + " is no longer in vanish.");
 	        if(needLogonMsg.contains(p)) {
 	    	    for(Player lPlayer : Bukkit.getOnlinePlayers()){
-	    	    	lPlayer.sendMessage("§7(§a+§7) §a" + p.getName());
+	    	    	lPlayer.sendMessage(ConfigMessage.getMessage("JOIN_MESSAGE", new String[]{p.getName()}));
 	    	    }
 		        needLogonMsg.remove(p);
 

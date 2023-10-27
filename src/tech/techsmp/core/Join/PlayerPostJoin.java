@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import tech.techsmp.core.commands.Vanish;
+import utils.ConfigMessage;
 
 
 public class PlayerPostJoin implements Listener{
@@ -96,7 +97,7 @@ public class PlayerPostJoin implements Listener{
 
 
                 if(!p.isWhitelisted()){
-                    p.sendMessage("§eWelcome! It looks like you are not verified but that's okay!\n§ePlease Join out discord to get verified at §ldiscord.ttumc.tech\n§r§aRules: §7be civil, no greifing, no cheating");
+                    p.sendMessage(ConfigMessage.getMessage("JOIN_NONVERIFIED_JOIN", new String[]{" "}));
                 }
                 }
             }, 10L);

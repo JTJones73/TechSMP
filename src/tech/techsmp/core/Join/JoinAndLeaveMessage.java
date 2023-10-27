@@ -19,6 +19,7 @@ import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
+import utils.ConfigMessage;
 
 
 public class JoinAndLeaveMessage implements Listener{
@@ -32,7 +33,7 @@ public class JoinAndLeaveMessage implements Listener{
         	e.setJoinMessage(null);
         }
         else {
-        	e.setJoinMessage("§7(§a+§7) §a" + p.getName());
+        	e.setJoinMessage(ConfigMessage.getMessage("JOIN_MESSAGE", new String[]{p.getName()}));
         }
         
     }
@@ -41,7 +42,7 @@ public class JoinAndLeaveMessage implements Listener{
         Player p = event.getPlayer();
         if(p.hasPermission("rank.admin") && !v.handleAdmin(p, false, true)) {
         	event.setQuitMessage(null);
-            Bukkit.getConsoleSender().sendMessage("§cPlayer " + p.getName() + " silently left the game.");
+            Bukkit.getConsoleSender().sendMessage(ConfigMessage.getMessage("JOIN_SILENTLY", new String[]{p.getName()}));
 
         }
         else {
@@ -50,7 +51,7 @@ public class JoinAndLeaveMessage implements Listener{
                     p.hidePlayer(vanishedPlayer);
                 }
             }
-        	event.setQuitMessage("§7(§c-§7) §c" + p.getName());
+        	event.setQuitMessage(ConfigMessage.getMessage("LEAVE_MESSAGE", new String[]{p.getName()}));
         }
         if(Spec.specOnLocation.containsKey(p)) {
         	p.teleport(Spec.specOnLocation.get(p));

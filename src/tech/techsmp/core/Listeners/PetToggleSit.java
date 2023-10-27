@@ -11,6 +11,8 @@ import org.bukkit.entity.Cat;
 import org.bukkit.entity.Parrot;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import utils.ConfigMessage;
+
 public class PetToggleSit implements Listener{
 
 @EventHandler
@@ -60,7 +62,7 @@ public class PetToggleSit implements Listener{
                         public void run() {
                             if(pet.getHealth() <= 1 && !pet.isSitting()){
                                 pet.setSitting(true);
-                                p.sendMessage("§c" + pet.getName() + " is too tired! Feed them to make them well again!");
+                                p.sendMessage(ConfigMessage.getMessage("PET_TOO_TIRED", new String[]{pet.getName()}));
                             }
                         }
                     }, 5L);

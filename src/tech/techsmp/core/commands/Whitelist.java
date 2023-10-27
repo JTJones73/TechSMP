@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
+import utils.ConfigMessage;
 
 
 public class Whitelist implements CommandExecutor {
@@ -16,22 +16,22 @@ public class Whitelist implements CommandExecutor {
 			if(sender instanceof Player){
 				Player p = (Player) sender;
 				if(!p.isWhitelisted()){
-					p.sendMessage("§cSorry! You must be a verified player to use this command. Get verified by joining our discord ");
+					p.sendMessage(ConfigMessage.getMessage("WHITELIST_MUST_BE_VERIFIED", new String[]{" "}));
 					return true;
 				}
 			}
 					if(args.length == 1){
 						if(!isPlayerWhitelisted(args[0])){
 							guests.add(args[0].toLowerCase());
-							sender.sendMessage("§aAdded player " + args[0].toString() + " to whitelist");
+							sender.sendMessage(ConfigMessage.getMessage("WHITELIST_WHITELISTED", new String[]{args[0]}));
 						}
 						else{
-							sender.sendMessage("§c" + args[0] + " is already whitelisted");
+							sender.sendMessage(ConfigMessage.getMessage("WHITELIST_ALREADY_WHITELISTED", new String[]{args[0]}));
 						}
 					
 					}
 					else {
-						sender.sendMessage("§cError usage: /wl <player> (allows you to temporarily whitelist a player)");
+						sender.sendMessage(ConfigMessage.getMessage("WHITELIST_ERROR_USAGE", new String[]{" "}));
 					}
 			}
 		

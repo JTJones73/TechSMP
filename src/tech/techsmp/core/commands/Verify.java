@@ -37,7 +37,7 @@ public class Verify implements CommandExecutor {
     					{
     					    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/bedrock_whitelist.yml",true); //the true will append the new data
     					    fw.write(args[0] + "\n");//appends the string to the file
-    					    sender.sendMessage("§aBedrock player " + args[0] +  " has been verified!");
+    					    sender.sendMessage(ConfigMessage.getMessage("VERIFY_BEDROCK_VERIFIED", new String[]{args[0]}));
     					    fw.close();
     					}
     					catch(IOException ioe)
@@ -48,11 +48,11 @@ public class Verify implements CommandExecutor {
                 }
             }
             else
-            	sender.sendMessage("§cSorry! You do not have permission to use this command.");
+            	sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{}));
 
         }
         else{
-            sender.sendMessage("§cError usage: /verify <player>");
+            sender.sendMessage(ConfigMessage.getMessage("VERIFY_ERROR_USAGE", new String[]{" "}));
         }
         return true;
     }

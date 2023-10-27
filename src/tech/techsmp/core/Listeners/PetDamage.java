@@ -15,6 +15,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
+import utils.ConfigMessage;
+
 public class PetDamage implements Listener{
 	@EventHandler (priority  = EventPriority.HIGHEST)                      
     public void onPetDamage(EntityDamageByEntityEvent event){
@@ -28,7 +30,7 @@ public class PetDamage implements Listener{
 			}
 			else {
 				event.setCancelled(true);
-				p.sendMessage("§cWarning: hitting your pet with a golden hoe WILL kill them");
+				p.sendMessage(ConfigMessage.getMessage("PET_GOLDHOE_WARNING", new String[]{" "}));
 				pet.damage(event.getDamage());
 			}
 		}
@@ -49,7 +51,7 @@ public class PetDamage implements Listener{
                     try {
                         w.teleport(Bukkit.getServer().getPlayer(w.getOwner().getUniqueId()).getBedSpawnLocation());
                         w.setSitting(true);
-                        Bukkit.getServer().getPlayer(w.getOwner().getUniqueId()).sendMessage("§c" + w.getName() + " has fainted! Do not worry they are safe and sound at your bed. Feed them to make them well again!");
+                        Bukkit.getServer().getPlayer(w.getOwner().getUniqueId()).sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{w.getName()}));
                         event.setCancelled(true);
 
                     } catch (Exception exception) {
@@ -57,7 +59,7 @@ public class PetDamage implements Listener{
                         w.setSitting(true);
                         try {
                             Player p = Bukkit.getPlayer(w.getOwner().getUniqueId());
-                            p.sendMessage("§c" + w.getName() + " has fainted! Do not worry they are safe and sound at the animal shelter. Do /roundup to teleport them to you and feed them to make them better");
+                            p.sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{w.getName()}));
                             event.setCancelled(true);
                         } catch (Exception ex) {
                             event.setCancelled(true);
@@ -78,7 +80,7 @@ public class PetDamage implements Listener{
                 try {
                     c.teleport(Bukkit.getServer().getPlayer(c.getOwner().getUniqueId()).getBedSpawnLocation());
                     c.setSitting(true);
-                    Bukkit.getServer().getPlayer(c.getOwner().getUniqueId()).sendMessage("§c" + c.getName() + " has fainted! Do not worry they are safe and sound at your bed. Feed them to make them well again!");
+                    Bukkit.getServer().getPlayer(c.getOwner().getUniqueId()).sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{c.getName()}));
                     event.setCancelled(true);
 
                 } catch (Exception exception) {
@@ -86,7 +88,7 @@ public class PetDamage implements Listener{
                     c.setSitting(true);
                     try {
                         Player p = Bukkit.getPlayer(c.getOwner().getUniqueId());
-                        p.sendMessage("§c" + c.getName() + " has fainted! Do not worry they are safe and sound at the animal shelter. Do /roundup to teleport them to you and feed them to make them better");
+                        p.sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{c.getName()}));
                         event.setCancelled(true);
                     } catch (Exception ex) {
                         event.setCancelled(true);
@@ -107,7 +109,7 @@ public class PetDamage implements Listener{
                 try {
                     p.teleport(Bukkit.getServer().getPlayer(p.getOwner().getUniqueId()).getBedSpawnLocation());
                     p.setSitting(true);
-                    Bukkit.getServer().getPlayer(p.getOwner().getUniqueId()).sendMessage("§c" + p.getName() + " has fainted! Do not worry they are safe and sound at your bed. Feed them to make them well again!");
+                    Bukkit.getServer().getPlayer(p.getOwner().getUniqueId()).sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{p.getName()}));
                     event.setCancelled(true);
 
                 } catch (Exception exception) {
@@ -115,7 +117,7 @@ public class PetDamage implements Listener{
                     p.setSitting(true);
                     try {
                         Player player = Bukkit.getPlayer(p.getOwner().getUniqueId());
-                        player.sendMessage("§c" + p.getName() + " has fainted! Do not worry they are safe and sound at the animal shelter. Do /roundup to teleport them to you and feed them to make them better");
+                        player.sendMessage(ConfigMessage.getMessage("PET_FAINTED", new String[]{p.getName()}));
                         event.setCancelled(true);
                     } catch (Exception ex) {
                         event.setCancelled(true);
