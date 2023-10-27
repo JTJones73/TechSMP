@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import tech.techsmp.core.cosmetic.Chat;
+import utils.ConfigMessage;
 
 public class Unmute implements CommandExecutor {
 
@@ -18,18 +19,18 @@ public class Unmute implements CommandExecutor {
                 try {
                     Chat.Muted.remove(args[0].toLowerCase());
                     Bukkit.getConsoleSender().sendMessage("§c" + args[0] + " has been unmuted by " + sender.getName());
-                    sender.sendMessage("§cUnmuted " + args[0]);
+                    sender.sendMessage(ConfigMessage.getMessage("UNMUTE_UNMUTED", new String[]{args[0]}));
 
                 }
                 catch(Exception exception){
-                    sender.sendMessage("§cError: player is not muted (or you mistyped)");
+                    sender.sendMessage(ConfigMessage.getMessage("UNMUTE_ERROR_NO_PLAYER", new String[]{" "}));
                 }
             }
             else {
-                sender.sendMessage("§cError usage: /unmute <player>");
+                sender.sendMessage(ConfigMessage.getMessage("UNMUTE_ERROR_USAGE", new String[]{" "}));
             }
         }
-        else sender.sendMessage("§cSorry! you do not have permission to use this command");
+        else sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{" "}));
         return true;
     }
 }

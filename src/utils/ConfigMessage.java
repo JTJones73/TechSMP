@@ -1,8 +1,8 @@
 package utils;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import tech.techsmp.core.Main;
@@ -24,14 +24,19 @@ public class ConfigMessage {
         FileConfiguration msgYaml = YamlConfiguration.loadConfiguration(msgSaveFile);
         keyToMessageBuilder = msgYaml.getConfigurationSection("Messages").getValues(false);
         Bukkit.broadcastMessage(keyToMessageBuilder.toString());
-        Bukkit.broadcastMessage(ConfigMessage.getMessage("DISCORD", new String[]{" "}));
-        Bukkit.broadcastMessage(ConfigMessage.getMessage("CHAT_OFFICER_CHAT", new String[]{"theencomputers", "Keep yourself safe :)"}));
     }
     public static String getMessage(String textKey, String[] variables){
         if(keyToMessageBuilder.containsKey(textKey)){
             return replaceMessage((String)keyToMessageBuilder.get(textKey), variables);
         }
-        return null;
+        else{
+            String errorResponse = textKey;
+            for(int i = 0; i < variables.length; i++){
+             errorResponse = errorResponse + " ";
+            }
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERROR COULD NOT FIND KEY: " + errorResponse);
+            return errorResponse;
+        }
     }
     public static String replaceMessage(String textKey, String[] variables){
         boolean inAnd = false;

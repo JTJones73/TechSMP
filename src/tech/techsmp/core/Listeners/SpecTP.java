@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import tech.techsmp.core.commands.Spec;
+import utils.ConfigMessage;
 import utils.Teleporter;
 
 import static java.lang.Integer.parseInt;
@@ -20,7 +21,8 @@ public class SpecTP implements Listener{
       if(event.getMessage().toLowerCase().startsWith("/help") || event.getMessage().toLowerCase().startsWith("/?")){
           event.setCancelled(true);
           Player p = event.getPlayer();
-          p.sendMessage("§9------Welcome to the Tennessee Tech MC Server------");
+          p.sendMessage(ConfigMessage.getMessage("HELP_HELP_MSG", new String[]{" "}));
+          /*p.sendMessage("§9------Welcome to the Tennessee Tech MC Server------");
           p.sendMessage("§9/help                    §7§7Displays help message");
           p.sendMessage("§9§9/discord                §7§7Gives link to our discord");
           p.sendMessage("§9§9/roundup                §7§7Teleports all of your loaded pets to you");
@@ -29,13 +31,13 @@ public class SpecTP implements Listener{
           p.sendMessage("§9/wl <player>            §7§7Temporarily whitelists a player");
           p.sendMessage("§9/fullbright              §7§7Toggles night visions");
           p.sendMessage("§9/home                    §7§7Teleports you home (use: /sethome)");
-          p.sendMessage("§9/help                     §7§7Displays help message");
+          p.sendMessage("§9/help                     §7§7Displays help message");*/
           return;
 
       }
       if(!event.getPlayer().isOp()){
           if(event.getMessage().toLowerCase().startsWith("/me")){
-              event.getPlayer().sendMessage("§cWe don't do that here");
+              event.getPlayer().sendMessage(ConfigMessage.getMessage("ME_NO_ME", new String[]{" "}));
              event.setCancelled(true);
              return;
 
@@ -65,10 +67,10 @@ public class SpecTP implements Listener{
                     Player tp = Bukkit.getServer().getPlayer(playerName[1]);
                     Teleporter.teleport(p, tp.getLocation());
                     //p.teleport(tp.getLocation());
-                    p.sendMessage("§aTeleporting you to " + tp.getName());
+                    p.sendMessage(ConfigMessage.getMessage("TP_TELEPORTING_TO_PLAYER", new String[]{tp.getName()}));
                 }
                 catch(Exception e){
-                    p.sendMessage("§cError: could not find player " + playerName[1]);
+                    p.sendMessage(ConfigMessage.getMessage("TP_ERROR_NO_PLAYER", new String[]{playerName[1]}));
                 }
             }
             else if(event.getMessage().split(" ").length == 4){
@@ -79,7 +81,7 @@ public class SpecTP implements Listener{
                     //p.teleport(new Location(Bukkit.getWorld("world"), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
                 }
                 catch (Exception e){
-                    p.sendMessage("§cError: could not find location");
+                    p.sendMessage(ConfigMessage.getMessage("TP_ERROR_NO_LOCATION", new String[]{" "}));
 
                 }
             }
@@ -90,15 +92,15 @@ public class SpecTP implements Listener{
                     p.teleport(new Location(Bukkit.getWorld(location[4]), parseInt(location[1]), parseInt(location[2]), parseInt(location[3])));
                 }
                 catch (Exception e){
-                    p.sendMessage("§cError: could not find location");
+                    p.sendMessage(ConfigMessage.getMessage("HELPE_HELP_MSG", new String[]{" "}));
 
                 }
             }
             else
-                p.sendMessage("§cError usage: /tp <player>");
+                p.sendMessage(ConfigMessage.getMessage("TP_ERROR_USAGE", new String[]{" "}));
         }
         else
-            p.sendMessage("§cError: you must be in spectator mode to use this command");
+            p.sendMessage(ConfigMessage.getMessage("TP_MUST_BE_IN_SPEC", new String[]{" "}));
 }
     
 }

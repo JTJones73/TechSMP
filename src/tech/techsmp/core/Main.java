@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import utils.ConfigMessage;
 import utils.Teleporter;
 import utils.TimeController;
 
@@ -40,6 +41,7 @@ public class Main extends JavaPlugin implements Listener{
 
                 plugin = this;
                 TimeController.timerTask();
+        ConfigMessage.loadMessages();
         Bukkit.getConsoleSender().sendMessage("TechSMP By James Jones");
         Bukkit.getServer().getPluginManager().registerEvents(new Chat(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);

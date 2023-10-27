@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import utils.ConfigMessage;
 import utils.DiscordWebhook;
 
 
@@ -45,14 +46,12 @@ public class MineAlerts implements Listener{
             if(unexposed && foundBlock) {
         	for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("rank.trusted")) {
-                    player.sendMessage("§a" + event.getPlayer().getName() + " §7=> §e§lUnexposed §bDiamond Ore §7[" + block.getLocation().getBlockX()
-                    		+ ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
+                    player.sendMessage(ConfigMessage.getMessage("MINEALERT_UNEXPOSED_ORE", new String[]{event.getPlayer().getName(),event.getBlock().getX() + "",event.getBlock().getY() + "",event.getBlock().getZ() + ""}));
                 }
             }
                 DiscordWebhook.sendDiscordMsg("", "Cheat", event.getPlayer().getName() + " Unexposed Ore", "Unexposed Diamond Ore [" + block.getLocation().getBlockX()
                         + ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
-                Bukkit.getConsoleSender().sendMessage("§a" + event.getPlayer().getName() + " §7=> §e§lUnexposed §bDiamond Ore §7[" + block.getLocation().getBlockX()
-            		+ ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ() + "]");
+                Bukkit.getConsoleSender().sendMessage(ConfigMessage.getMessage("MINEALERT_UNEXPOSED_ORE", new String[]{event.getPlayer().getName(),event.getBlock().getX() + "",event.getBlock().getY() + "",event.getBlock().getZ() + ""}));
             }
         }
     }

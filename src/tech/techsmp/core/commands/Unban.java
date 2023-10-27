@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import utils.ConfigMessage;
 
 public class Unban implements CommandExecutor {
 
@@ -17,17 +18,17 @@ public class Unban implements CommandExecutor {
                 try {
                     PlayerPreJoin.banList.remove(args[0].toLowerCase());
                     Bukkit.getConsoleSender().sendMessage("§c" + args[0] + " has been unbanned by " + sender.getName());
-                    sender.sendMessage("§cUnbanned " + args[0]);
+                    sender.sendMessage(ConfigMessage.getMessage("UNBAN_UNBANNED_PLAYER", new String[]{sender.getName()}));
                 }
                 catch(Exception exception){
-                    sender.sendMessage("§cError: player is not banned (or you mistyped)");
+                    sender.sendMessage(ConfigMessage.getMessage("UNBAN_ERROR_NO_PLAYER", new String[]{" "}));
                 }
             }
             else {
-                sender.sendMessage("§cError usage: /unban <player>");
+                sender.sendMessage(ConfigMessage.getMessage("UNBAN_ERROR_USAGE", new String[]{" "}));
             }
         }
-        else sender.sendMessage("§cSorry! you do not have permission to use this command");
+        else sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{" "}));
         return true;
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.OfflinePlayer;
+import utils.ConfigMessage;
 
 public class Verify implements CommandExecutor {
 
@@ -22,13 +23,13 @@ public class Verify implements CommandExecutor {
                         OfflinePlayer p = Bukkit.getServer().getOfflinePlayer(args[0]);
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "whitelist add " + p.getName());
                         if(p.isWhitelisted())
-                        	sender.sendMessage("§aPlayer " + p.getName().toString() + " has been verified!");
+                        	sender.sendMessage(ConfigMessage.getMessage("VERIFY_PLAYER_VERIFIED", new String[]{p.getName()}));
                         else
-                            sender.sendMessage("§cError: Could not find player");
+                            sender.sendMessage(ConfigMessage.getMessage("VANISH_YOU_ARE_NOT_VANISHED", new String[]{" "}));
 
                     }
                     catch(Exception e){
-                        sender.sendMessage("§cError: Could not find player");
+                        sender.sendMessage(ConfigMessage.getMessage("VERIFY_ERROR_NO_PLAYER", new String[]{" "}));
                     }
                 }
                 	else{
@@ -36,7 +37,7 @@ public class Verify implements CommandExecutor {
     					{
     					    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/bedrock_whitelist.yml",true); //the true will append the new data
     					    fw.write(args[0] + "\n");//appends the string to the file
-    					    sender.sendMessage("§aBedrock player " + args[0] +  " has been verified!");
+    					    sender.sendMessage(ConfigMessage.getMessage("VERIFY_BEDROCK_VERIFIED", new String[]{args[0]}));
     					    fw.close();
     					}
     					catch(IOException ioe)
@@ -47,11 +48,11 @@ public class Verify implements CommandExecutor {
                 }
             }
             else
-            	sender.sendMessage("§cSorry! You do not have permission to use this command.");
+            	sender.sendMessage(ConfigMessage.getMessage("NO_PERMS", new String[]{}));
 
         }
         else{
-            sender.sendMessage("§cError usage: /verify <player>");
+            sender.sendMessage(ConfigMessage.getMessage("VERIFY_ERROR_USAGE", new String[]{" "}));
         }
         return true;
     }
