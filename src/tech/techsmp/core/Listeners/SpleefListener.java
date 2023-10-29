@@ -35,6 +35,8 @@ public class SpleefListener implements Listener{
 
     public static Map<Player, Float> spleefExp = new HashMap<>();
     public static LinkedList<Player> spleefers = new LinkedList<>();
+    public static LinkedList<Player> alreadyTeleporting = new LinkedList<>();
+
     private LinkedList<Player> fallListener = new LinkedList<>();
 
     int spleefLayer = 100;
@@ -103,16 +105,31 @@ public class SpleefListener implements Listener{
     }
     public static void removePlayerFromSpleef(Player p){
             try {                                               //for some reason if they are out of the arena this will through null pointer exception
-                if(isEventInSpleefArena(p.getLocation())) {
-                    Teleporter.teleport(p, spleefOffLocation);
+                if(!alreadyTeleporting.contains(p)) {
+                    alreadyTeleporting.add(p);
                 }
-            }catch (Exception e){
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        spleefers.remove(p);
+                        if(spleefStreak.containsKey(p))
+                            spleefStreak.remove(p);
+                        if(isEventInSpleefArena(p.getLocation())) {
+                            Teleporter.teleport(p, spleefOffLocation);
+                        }
+
+                    }
+                }.runTaskLater(Main.getInstance(), 3);
+
+            }catch (Exception e){}
 
 
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
+                    if(alreadyTeleporting.contains(p))
+                        alreadyTeleporting.remove(p);
                     if(removeSpleeferDebounce.contains(p)) removeSpleeferDebounce.remove(p);
                     p.getInventory().setContents(spleefInv.get(p));
 
@@ -124,7 +141,7 @@ public class SpleefListener implements Listener{
                     spleefers.remove(p);
 
                 }
-            }.runTaskLater(Main.getInstance(), 3);
+            }.runTaskLater(Main.getInstance(), 6);
 ;
 
             //remove all values for player
@@ -135,7 +152,7 @@ public class SpleefListener implements Listener{
             spleefHealth.remove(p);
 
         }
-    }
+
     public static boolean isEventInSpleefArena(Location loc){
         if(loc.getBlockX() <= -109 && loc.getBlockX() >= -143){
             if(loc.getBlockY() <= 102 && loc.getBlockY() >= 97){
@@ -148,7 +165,7 @@ public class SpleefListener implements Listener{
     }
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {       //Prevent them from teleporting out with cmds or epearls
-        if(spleefers.contains(e.getPlayer())) removePlayerFromSpleef(e.getPlayer());
+        if(spleefers.contains(e.getPlayer()) && !alreadyTeleporting.contains(e.getPlayer())) removePlayerFromSpleef(e.getPlayer());
     }
     @EventHandler
     public void onSnowBreak(BlockBreakEvent event) {
