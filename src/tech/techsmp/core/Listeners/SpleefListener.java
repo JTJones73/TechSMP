@@ -103,10 +103,12 @@ public class SpleefListener implements Listener{
     }
     public static void removePlayerFromSpleef(Player p){
             try {                                               //for some reason if they are out of the arena this will through null pointer exception
+                spleefers.remove(p);
+                spleefStreak.remove(p);
                 if(isEventInSpleefArena(p.getLocation())) {
                     Teleporter.teleport(p, spleefOffLocation);
                 }
-            }catch (Exception e){
+            }catch (Exception e){}
 
 
 
