@@ -43,19 +43,11 @@ public class SpecPacketBlocker {
 
                     // multiple events share same packet object
                     event.setPacket(event.getPacket().shallowClone());
-                    String gameMode = event.getPacket().getStrings().read(0);
-                    Bukkit.broadcastMessage(gameMode);
-
-                    PacketContainer packet = event.getPacket();
-                    EnumSet<EnumWrappers.PlayerInfoAction> pInfoList = (EnumSet<EnumWrappers.PlayerInfoAction>) (packet.getModifier().getValues().get(0));
-                    Iterator<EnumWrappers.PlayerInfoAction> actionIterator = pInfoList.iterator();
-                    if (pInfoList.toArray()[0].toString() == EnumWrappers.PlayerInfoAction.UPDATE_GAME_MODE.toString()){
-
-
-                        if(!event.getPlayer().hasPermission("rank.trusted")){
-                            event.setCancelled(true);
-                        }
+                    if(event.getPacket().getModifier().read(0).toString().equals("[UPDATE_GAME_MODE]") && !event.getPlayer().hasPermission("rank.trusted")){
+                        event.setCancelled(true);
                     }
+
+
                 }
             }
         });
