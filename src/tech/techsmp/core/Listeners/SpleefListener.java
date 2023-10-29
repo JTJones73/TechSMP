@@ -140,16 +140,17 @@ public class SpleefListener implements Listener{
                     p.setExp(spleefExp.get(p));
                     spleefers.remove(p);
 
+                    //remove all values for player
+                    spleefInv.remove(p);
+                    spleefSaturation.remove(p);
+                    spleefHunger.remove(p);
+                    spleefExp.remove(p);
+                    spleefHealth.remove(p);
+
                 }
             }.runTaskLater(Main.getInstance(), 6);
 ;
 
-            //remove all values for player
-            spleefInv.remove(p);
-            spleefSaturation.remove(p);
-            spleefHunger.remove(p);
-            spleefExp.remove(p);
-            spleefHealth.remove(p);
 
         }
 
