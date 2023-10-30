@@ -66,6 +66,7 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new ArmorStandListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EnderManGreif(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ParkourListener(), this);
 
 
         getCommand("spleef").setExecutor(new Spleef());
@@ -89,10 +90,12 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("spawn").setExecutor(new Spawn());
         getCommand("tpaccept").setExecutor(new Tpaccept());
         getCommand("tpdeny").setExecutor(new Tpdeny());
+        getCommand("kb").setExecutor(new Killboard());
         getCommand("spec").setExecutor(new Spec());
         getCommand("inspect").setExecutor(new Inspect(this));
         getCommand("tban").setExecutor(new Tban());
          getCommand("unban").setExecutor(new Unban());
+        getCommand("parkour").setExecutor(new Parkour());
          getCommand("rank").setExecutor(new Rank(this));
 
          //Packet Listeners
