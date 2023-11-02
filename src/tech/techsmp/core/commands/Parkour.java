@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.techsmp.core.Listeners.ParkourListener;
 import utils.ConfigMessage;
+import utils.Teleporter;
 
 public class Parkour implements CommandExecutor {
 
@@ -38,8 +39,22 @@ public class Parkour implements CommandExecutor {
                     }
                     catch (Exception e){}
                 }
+                else if(args[0].equalsIgnoreCase("dq")){
+                    try {
+                        ParkourListener.gameOverPlayer(Bukkit.getPlayer(args[1]));
+                    }
+                    catch (Exception e){
+                        sender.sendMessage(ConfigMessage.getMessage("PARKOUR_ERROR_NO_PLAYER", new String[]{args[1]}));
+                    }
+                }
+            }
+            if(args.length == 0){
+                Teleporter.teleport((Player)sender, ParkourListener.parkourLocation);
             }
 
+        }
+        else{
+            Teleporter.teleport((Player)sender, ParkourListener.parkourLocation);
         }
 
         return true;

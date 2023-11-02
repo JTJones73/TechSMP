@@ -22,6 +22,8 @@ public class Rank implements CommandExecutor {
         attachment.setPermission("coreprotect.inspect", true);
         attachment.setPermission("coreprotect.rollback", true);
         attachment.setPermission("coreprotect.lookup", true);
+        attachment.setPermission("coreprotect.teleport", true);
+
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

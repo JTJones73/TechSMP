@@ -20,9 +20,7 @@ public class Killboard implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(sender.hasPermission("rank.trusted")){
             if(args.length == 1 && args[0].equalsIgnoreCase("off")){
-                try{
-                    sb.getObjective("killboard").unregister();
-                }catch (Exception e){}
+                killKillboard();
                 sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_OFF", new String[]{" "}));
             }
             if(args.length >1){
@@ -46,12 +44,12 @@ public class Killboard implements CommandExecutor {
                     sb.registerNewObjective("killboard", "score", kbTitle).setDisplaySlot(DisplaySlot.SIDEBAR);
                     sb.getObjective("killboard").setDisplayName(kbTitle);
                 }
-                else{
+                /*else{
                     Bukkit.broadcastMessage("1st else");
 
                     sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_ERROR_USAGE", new String[]{" "}));
 
-                }
+                }*/
 
 
             }
@@ -68,6 +66,17 @@ public class Killboard implements CommandExecutor {
                     }
                 }
             }
+            else if(args.length == 2){
+                if(args[0].equalsIgnoreCase("remove")){
+                    try{
+                        sb.resetScores(args[1]);
+                        sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_REMOVED_PLAYER", new String[]{args[1]}));
+                    }
+                    catch (Exception e){
+                        sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_ERROR_NO_PLAYER", new String[]{args[1]}));
+                    }
+                }
+            }
             else{
                 sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_ERROR_USAGE", new String[]{" "}));
             }
@@ -75,7 +84,7 @@ public class Killboard implements CommandExecutor {
         }
         return true;
     }
-    public void initKillboard(String title){
+    public static void initKillboard(String title){
         try{
             sb.getObjective("killboard").unregister();
         }catch (Exception e){}
@@ -84,22 +93,27 @@ public class Killboard implements CommandExecutor {
         sb.registerNewObjective("killboard", "score", title).setDisplaySlot(DisplaySlot.SIDEBAR);
         sb.getObjective("killboard").setDisplayName(title);
     }
-    public void sendKillboard(Player p){
+    public static void sendKillboard(Player p){
         p.setScoreboard(sb);
     }
-    public void removeKillboard(Player p){
+    public static void removeKillboard(Player p){
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
     }
-    public void setScore(Player p, int score){
+    public static void setScore(Player p, int score){
         try {
             sb.getObjective("killboard").getScore(p.getName()).setScore(score);
         }catch (Exception e){}
     }
-    public int getScore(Player p){
+    public static int getScore(Player p){
         try {
             return sb.getObjective("killboard").getScore(p.getName()).getScore();
         }catch (Exception e){}
         return -1;
+    }
+    public static void killKillboard(){
+        try{
+            sb.getObjective("killboard").unregister();
+        }catch (Exception e){}
     }
 }
 

@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Main;
+import tech.techsmp.core.commands.Killboard;
 import utils.ConfigMessage;
 import utils.Teleporter;
 
@@ -34,7 +35,7 @@ public class ParkourListener implements Listener{
     LinkedList<Player> endDebounce = new LinkedList<>();
     boolean isTimerRunning = false;
 
-    static Location parkourLocation = new Location(Bukkit.getWorld("world"), -86, 96, -102);
+    public static Location parkourLocation = new Location(Bukkit.getWorld("world"), -86, 96, -102);
     Location startPlateLoc = new Location(Bukkit.getWorld("world"), -84, 96, -104);
     Location endPlateLoc = new Location(Bukkit.getWorld("world"), -65, 101, -106);
     static ArmorStand leaderBoard = null;
@@ -46,7 +47,7 @@ public class ParkourListener implements Listener{
         }
         if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(startPlateLoc)){
             Player p = (Player) e.getPlayer();
-            Bukkit.broadcastMessage("starting");
+            //Bukkit.broadcastMessage("starting");
 
             startTimer(p);
         }
@@ -55,14 +56,34 @@ public class ParkourListener implements Listener{
             if(!endDebounce.contains(p)) {
                 endDebounce.add(e.getPlayer());
                 addLeaderboardValue(p, playerParkourTime.get(p));
-                Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
+                if(inEvent) {
+                    Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
+                    Killboard.setScore(e.getPlayer(), playerParkourTime.get(p)/20);
+                }
                 gameOverPlayer(p);
             }
         }
     }
     @EventHandler
+    public void finishSwimEvent(PlayerMoveEvent e){
+        Player p = e.getPlayer();
+        if(p.getLocation().getWorld().getBlockAt(p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ()).getType().equals(Material.WATER)){
+            if(p.getLocation().distance(endPlateLoc) < 5){
+                if(!endDebounce.contains(p)) {
+                    endDebounce.add(e.getPlayer());
+                    addLeaderboardValue(p, playerParkourTime.get(p));
+                    if(inEvent) {
+                        Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
+                        Killboard.setScore(e.getPlayer(), playerParkourTime.get(p)/20);
+                    }
+                    gameOverPlayer(p);
+                }
+            }
+        }
+    }
+    @EventHandler
     public void joinEvent(PlayerJoinEvent e){
-        if(leaderBoard == null) {
+        /*if(leaderBoard == null) {
             for (Entity en : Bukkit.getWorld("world").getEntities()) {
                 if (en instanceof ArmorStand) {
                     if (en.getLocation().distance(startPlateLoc) < 5) {
@@ -70,13 +91,14 @@ public class ParkourListener implements Listener{
                     }
                 }
             }
-        }
+        }*/
         new BukkitRunnable() {
             @Override
             public void run() {
                 if(inEvent){
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spec on " + e.getPlayer().getName());
                     Teleporter.teleport(e.getPlayer(), parkourLocation);
+                    Killboard.sendKillboard(e.getPlayer());
                 }
         }
         }.runTaskLater(Main.getInstance(), 3);
@@ -84,7 +106,7 @@ public class ParkourListener implements Listener{
     }
     @EventHandler
     public void leaveEndPlate(PlayerMoveEvent e){
-        if(endDebounce.contains(e.getPlayer()) && e.getPlayer().getLocation().distance(endPlateLoc) > 2) {
+        if(endDebounce.contains(e.getPlayer()) && e.getPlayer().getLocation().distance(endPlateLoc) > 6) {
             endDebounce.remove(e.getPlayer());
         }
     }
@@ -130,7 +152,7 @@ public class ParkourListener implements Listener{
         p.setGameMode(GameMode.SURVIVAL);
         //p.sendMessage(ConfigMessage.getMessage("PARKOUR_WELCOME", new String[]{" "}));
     }
-    public void gameOverPlayer(Player p){
+    public static void gameOverPlayer(Player p){
         if(inEvent){
             p.setGameMode(GameMode.SPECTATOR);
         }
@@ -141,13 +163,13 @@ public class ParkourListener implements Listener{
     public void stopTimer(Player p){
         playerParkourTime.remove(p);
     }
-    public void initLeaderBoard(Entity en){
+    /*public void initLeaderBoard(Entity en){
         leaderBoard = (ArmorStand) en;
         leaderBoard.setVisible(false);
         leaderBoard.setCustomNameVisible(true);
         leaderBoard.setGravity(false);
         leaderBoard.setCustomName(ConfigMessage.getMessage("PARKOUR_LEADERBOARD_HEADER", new String[]{" "}) + "\n" + ConfigMessage.getMessage("PARKOUR_LEADERBOARD_HEADER", new String[]{" "}));
-    }
+    }*/
     public void addLeaderboardValue(Player p, int ticks){
         LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
         ArrayList<Integer> list = new ArrayList<>();
@@ -173,6 +195,12 @@ public class ParkourListener implements Listener{
                 }
             }
             leaderBoard.setCustomName(leaderBoardText);
+        }
+    }
+    public void stopEvent(){
+        inEvent = false;
+        for(Player p: Bukkit.getOnlinePlayers()){
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spec off " + p.getName());
         }
     }
 

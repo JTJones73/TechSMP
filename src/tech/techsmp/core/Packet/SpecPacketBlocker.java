@@ -61,14 +61,16 @@ public class SpecPacketBlocker {
             public void onPacketReceiving(PacketEvent event) {
                 specListener2ID = this;
                 Player p = event.getPlayer();
-                if(p.getGameMode().equals(GameMode.SPECTATOR)){
+                if(p.getGameMode().equals(GameMode.SPECTATOR) && p.hasPermission("rank.trusted")){
                     try {
                         if(Spec.specOnLocation.containsKey(p)){
                             Block interactBlock = p.getTargetBlock(null, 5);
-                            Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
-                                PlayerInteractEvent fakeEvent = new PlayerInteractEvent(p, Action.LEFT_CLICK_BLOCK, null, interactBlock, null);
-                                Bukkit.getPluginManager().callEvent(fakeEvent);
-                            });
+                            if(interactBlock != null) {
+                                Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
+                                    PlayerInteractEvent fakeEvent = new PlayerInteractEvent(p, Action.LEFT_CLICK_BLOCK, null, interactBlock, null);
+                                    Bukkit.getPluginManager().callEvent(fakeEvent);
+                                });
+                            }
                         }
                     }catch (Exception e){
 
@@ -103,16 +105,6 @@ public class SpecPacketBlocker {
         Main.getProtocolManager().removePacketListener(specListener2ID);
 
     }
-   /* public static void addPlayer(){
-        PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_INFO);
-        packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER));
-        packet.getPlayerInfoDataLists().write(1, Collections.singletonList(new PlayerInfoData(
-                new WrappedGameProfile("c08dc1a3-315b-433a-afaf-ab6c49cdeb6c", "Keelando"),
-                100,
-                EnumWrappers.NativeGameMode.SURVIVAL,
-                WrappedChatComponent.fromText("Keelando")
-        )));
-    }*/
   /*  private PacketContainer getPacketPlayerInfo(Player player, EnumWrappers.PlayerInfoAction action) {
         List<PlayerInfoData> datas = new ArrayList<>();
         datas.add(getPlayerInfoData(player));
