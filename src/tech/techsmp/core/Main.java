@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import utils.ConfigMessage;
+import utils.Event;
 import utils.Teleporter;
 import utils.TimeController;
 
@@ -67,6 +68,7 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new EnderManGreif(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ParkourListener(), this);
+        //Bukkit.getServer().getPluginManager().registerEvents(new Event(), this);
 
 
         getCommand("spleef").setExecutor(new Spleef());

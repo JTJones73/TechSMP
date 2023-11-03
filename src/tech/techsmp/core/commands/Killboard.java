@@ -13,6 +13,7 @@ import utils.ConfigMessage;
 import static java.lang.Integer.parseInt;
 
 public class Killboard implements CommandExecutor {
+    static boolean overRideKillboard = false;
     static Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
     //Scoreboard killboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
@@ -20,12 +21,14 @@ public class Killboard implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(sender.hasPermission("rank.trusted")){
             if(args.length == 1 && args[0].equalsIgnoreCase("off")){
+                overRideKillboard = false;
                 killKillboard();
                 sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_OFF", new String[]{" "}));
             }
             if(args.length >1){
                 //Bukkit.broadcastMessage(" > 1");
                 if(args[0].equalsIgnoreCase("on")){
+                    overRideKillboard = true;
                     String kbTitle = "";
                     for(int i = 1; i < args.length; i++){
                         if(kbTitle != ""){
@@ -43,6 +46,7 @@ public class Killboard implements CommandExecutor {
                     sb.clearSlot(DisplaySlot.SIDEBAR);
                     sb.registerNewObjective("killboard", "score", kbTitle).setDisplaySlot(DisplaySlot.SIDEBAR);
                     sb.getObjective("killboard").setDisplayName(kbTitle);
+                    return true;
                 }
                 /*else{
                     Bukkit.broadcastMessage("1st else");
@@ -57,7 +61,16 @@ public class Killboard implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("set")) {
                     try {
                         Score s = sb.getObjective("killboard").getScore(Bukkit.getPlayer(args[1]));
-                        s.setScore(parseInt(args[2]));
+                        if(args[2].charAt(0) == '+'){
+                            try{
+                                s.setScore(parseInt(args[2].substring(1)) + s.getScore());
+                            }
+                            catch(Exception e){
+                                s.setScore(parseInt(args[2].substring(1)));
+                            }
+                        }
+                        else
+                            s.setScore(parseInt(args[2]));
                         for(Player p: Bukkit.getOnlinePlayers()){
                             p.setScoreboard(sb);
                         }
@@ -85,13 +98,16 @@ public class Killboard implements CommandExecutor {
         return true;
     }
     public static void initKillboard(String title){
-        try{
-            sb.getObjective("killboard").unregister();
-        }catch (Exception e){}
+        if(!overRideKillboard) {
+            try {
+                sb.getObjective("killboard").unregister();
+            } catch (Exception e) {
+            }
 
-        sb.clearSlot(DisplaySlot.SIDEBAR);
-        sb.registerNewObjective("killboard", "score", title).setDisplaySlot(DisplaySlot.SIDEBAR);
-        sb.getObjective("killboard").setDisplayName(title);
+            sb.clearSlot(DisplaySlot.SIDEBAR);
+            sb.registerNewObjective("killboard", "score", title).setDisplaySlot(DisplaySlot.SIDEBAR);
+            sb.getObjective("killboard").setDisplayName(title);
+        }
     }
     public static void sendKillboard(Player p){
         p.setScoreboard(sb);
@@ -104,16 +120,19 @@ public class Killboard implements CommandExecutor {
             sb.getObjective("killboard").getScore(p.getName()).setScore(score);
         }catch (Exception e){}
     }
-    public static int getScore(Player p){
+    public static int getScore(String player){
         try {
-            return sb.getObjective("killboard").getScore(p.getName()).getScore();
+            return sb.getObjective("killboard").getScore(player).getScore();
         }catch (Exception e){}
-        return -1;
+        return 0;
     }
     public static void killKillboard(){
         try{
             sb.getObjective("killboard").unregister();
         }catch (Exception e){}
+    }
+    public boolean getKbOverride(){
+        return overRideKillboard;
     }
 }
 

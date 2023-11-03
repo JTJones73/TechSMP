@@ -8,9 +8,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.techsmp.core.Listeners.SpleefListener;
 import utils.ConfigMessage;
+import utils.Event;
 import utils.Teleporter;
 
 public class Spleef implements CommandExecutor {
+    public static boolean inSpleefEvent = false;
+
+    public static Event spleefEvent = new Event(true, SpleefListener.spleefOffLocation, SpleefListener.spleefOffLocation);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -29,8 +33,15 @@ public class Spleef implements CommandExecutor {
 
                     SpleefListener.enableSpleef();
                 }
+                if(args[0].equalsIgnoreCase("start")){
+                    spleefEvent.startEvent();
+                    Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_START", new String[]{" "}));
 
             }
+                if(args[0].equalsIgnoreCase("end")){
+                    spleefEvent.endEvent();
+                    Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_END", new String[]{" "}));
+                }
             else if(args.length == 2){
                 if(args[0].equalsIgnoreCase("broadcastspleefs")){
                     if(args[1].equalsIgnoreCase("on")){
@@ -44,6 +55,8 @@ public class Spleef implements CommandExecutor {
 
 
                     }
+                }
+
                 }
             }
         }

@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Main;
+import tech.techsmp.core.commands.Killboard;
+import tech.techsmp.core.commands.Spleef;
 import utils.ConfigMessage;
 import utils.Teleporter;
 
@@ -301,6 +303,9 @@ public class SpleefListener implements Listener{
                                 spleefStreak.remove(p);
                             } else
                                 Bukkit.broadcastMessage(ConfigMessage.getMessage("SPLEEF_SPLEEF_BROADCAST", new String[]{p.getName(), spleeferP.getName(), 0 + ""}));
+                        }
+                        if(Spleef.spleefEvent.getEventRunning()){
+                            Killboard.setScore(spleeferP, Killboard.getScore(spleeferP.getName()) + 1);
                         }
                     }
                     removeSpleeferDebounce.add(p);

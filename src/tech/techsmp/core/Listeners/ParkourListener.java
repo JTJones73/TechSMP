@@ -141,7 +141,7 @@ public class ParkourListener implements Listener{
                     }
                     for(Player timerPlayer: playerParkourTime.keySet()){
                         playerParkourTime.replace(timerPlayer, playerParkourTime.get(timerPlayer) + 1);
-                        timerPlayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ConfigMessage.getMessage("PARKOUR_TIMER", new String[]{playerParkourTime.get(timerPlayer) / 1200 + "",((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""})));
+                        timerPlayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ConfigMessage.getMessage("PARKOUR_TIMER", new String[]{playerParkourTime.get(timerPlayer) / 1200 + "",((playerParkourTime.get(timerPlayer) / 20) % 60) / 10 + "" + ((playerParkourTime.get(timerPlayer) / 20) % 60) % 10 + ""})));
                     }
                 }
             }.runTaskTimer(Main.getInstance(), 0, 1);
