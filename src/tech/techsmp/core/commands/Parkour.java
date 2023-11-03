@@ -24,6 +24,7 @@ public class Parkour implements CommandExecutor {
                     if(ParkourListener.inEvent){
                         ParkourListener.restrictList.clear();
                         ParkourListener.inEvent = false;
+                        ParkourListener.stopEvent();
                         Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_EVENT_ENDED", new String[]{" "}));
 
                     }

@@ -24,7 +24,7 @@ public class Killboard implements CommandExecutor {
                 sender.sendMessage(ConfigMessage.getMessage("KILLBOARD_OFF", new String[]{" "}));
             }
             if(args.length >1){
-                Bukkit.broadcastMessage(" > 1");
+                //Bukkit.broadcastMessage(" > 1");
                 if(args[0].equalsIgnoreCase("on")){
                     String kbTitle = "";
                     for(int i = 1; i < args.length; i++){

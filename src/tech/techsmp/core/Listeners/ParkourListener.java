@@ -36,14 +36,14 @@ public class ParkourListener implements Listener{
     boolean isTimerRunning = false;
 
     public static Location parkourLocation = new Location(Bukkit.getWorld("world"), -86, 96, -102);
-    Location startPlateLoc = new Location(Bukkit.getWorld("world"), -84, 96, -104);
-    Location endPlateLoc = new Location(Bukkit.getWorld("world"), -65, 101, -106);
+    Location startPlateLoc = new Location(Bukkit.getWorld("world"), -84, 96, -105);
+    Location endPlateLoc = new Location(Bukkit.getWorld("world"), -90, 97, -31);
     static ArmorStand leaderBoard = null;
 
     @EventHandler
     public void onPlateCross(PlayerInteractEvent e){
         if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)){
-            Bukkit.broadcastMessage(ChatColor.AQUA +  "" + e.getClickedBlock().getX() + "|" + e.getClickedBlock().getY() + "|" + e.getClickedBlock().getZ());
+            //Bukkit.broadcastMessage(ChatColor.AQUA +  "" + e.getClickedBlock().getX() + "|" + e.getClickedBlock().getY() + "|" + e.getClickedBlock().getZ());
         }
         if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(startPlateLoc)){
             Player p = (Player) e.getPlayer();
@@ -71,7 +71,7 @@ public class ParkourListener implements Listener{
             if(p.getLocation().distance(endPlateLoc) < 5){
                 if(!endDebounce.contains(p)) {
                     endDebounce.add(e.getPlayer());
-                    addLeaderboardValue(p, playerParkourTime.get(p));
+                    //addLeaderboardValue(p, playerParkourTime.get(p));
                     if(inEvent) {
                         Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
                         Killboard.setScore(e.getPlayer(), playerParkourTime.get(p)/20);
@@ -197,7 +197,7 @@ public class ParkourListener implements Listener{
             leaderBoard.setCustomName(leaderBoardText);
         }
     }
-    public void stopEvent(){
+    public static void stopEvent(){
         inEvent = false;
         for(Player p: Bukkit.getOnlinePlayers()){
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spec off " + p.getName());

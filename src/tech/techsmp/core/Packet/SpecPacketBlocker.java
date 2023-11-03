@@ -65,7 +65,7 @@ public class SpecPacketBlocker {
                     try {
                         if(Spec.specOnLocation.containsKey(p)){
                             Block interactBlock = p.getTargetBlock(null, 5);
-                            if(interactBlock != null) {
+                            if(interactBlock == null) {
                                 Bukkit.getServer().getScheduler().runTask(Main.getInstance(), () -> {
                                     PlayerInteractEvent fakeEvent = new PlayerInteractEvent(p, Action.LEFT_CLICK_BLOCK, null, interactBlock, null);
                                     Bukkit.getPluginManager().callEvent(fakeEvent);
