@@ -92,3 +92,6 @@ commands:
    kb:
       description: Manages parkour
       usage: /kb <on|off|set>
+   event:
+      description: Manages event mode
+      usage: /kb <init|uniti|start|end>

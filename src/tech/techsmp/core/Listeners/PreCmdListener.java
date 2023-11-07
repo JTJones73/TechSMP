@@ -14,7 +14,7 @@ import utils.Teleporter;
 
 import static java.lang.Integer.parseInt;
 
-public class SpecTP implements Listener{
+public class PreCmdListener implements Listener{
 
 @EventHandler
   public void onPreprocess(PlayerCommandPreprocessEvent event){

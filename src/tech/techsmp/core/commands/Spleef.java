@@ -1,20 +1,19 @@
 package tech.techsmp.core.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.techsmp.core.Listeners.SpleefListener;
 import utils.ConfigMessage;
-import utils.Event;
+import utils.EventMode;
 import utils.Teleporter;
 
 public class Spleef implements CommandExecutor {
     public static boolean inSpleefEvent = false;
 
-    public static Event spleefEvent = new Event(true, SpleefListener.spleefOffLocation, SpleefListener.spleefOffLocation);
+    public static EventMode spleefEvent = new EventMode(true, SpleefListener.spleefOffLocation, SpleefListener.spleefOffLocation);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

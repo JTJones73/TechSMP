@@ -42,27 +42,30 @@ public class ParkourListener implements Listener{
 
     @EventHandler
     public void onPlateCross(PlayerInteractEvent e){
-        if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)){
-            //Bukkit.broadcastMessage(ChatColor.AQUA +  "" + e.getClickedBlock().getX() + "|" + e.getClickedBlock().getY() + "|" + e.getClickedBlock().getZ());
-        }
-        if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(startPlateLoc)){
-            Player p = (Player) e.getPlayer();
-            //Bukkit.broadcastMessage("starting");
-
-            startTimer(p);
-        }
-        else if(e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(endPlateLoc) && playerParkourTime.containsKey((Player) e.getPlayer())){
-            Player p = (Player) e.getPlayer();
-            if(!endDebounce.contains(p)) {
-                endDebounce.add(e.getPlayer());
-                addLeaderboardValue(p, playerParkourTime.get(p));
-                if(inEvent) {
-                    Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
-                    Killboard.setScore(e.getPlayer(), playerParkourTime.get(p)/20);
-                }
-                gameOverPlayer(p);
+        try {
+            if (e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)) {
+                //Bukkit.broadcastMessage(ChatColor.AQUA +  "" + e.getClickedBlock().getX() + "|" + e.getClickedBlock().getY() + "|" + e.getClickedBlock().getZ());
             }
+            if (e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(startPlateLoc)) {
+                Player p = (Player) e.getPlayer();
+                //Bukkit.broadcastMessage("starting");
+
+                startTimer(p);
+            } else if (e.getClickedBlock().getType().equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE) && e.getClickedBlock().getLocation().equals(endPlateLoc) && playerParkourTime.containsKey((Player) e.getPlayer())) {
+                Player p = (Player) e.getPlayer();
+                if (!endDebounce.contains(p)) {
+                    endDebounce.add(e.getPlayer());
+                    addLeaderboardValue(p, playerParkourTime.get(p));
+                    if (inEvent) {
+                        Bukkit.broadcastMessage(ConfigMessage.getMessage("PARKOUR_SUCCESS", new String[]{p.getName(), playerParkourTime.get(p) / 1200 + "", ((playerParkourTime.get(p) / 20) % 60) / 10 + "" + ((playerParkourTime.get(p) / 20) % 60) % 10 + ""}));
+                        Killboard.setScore(e.getPlayer(), playerParkourTime.get(p) / 20);
+                    }
+                    gameOverPlayer(p);
+                }
+            }
+
         }
+        catch(Exception ex){}
     }
     @EventHandler
     public void finishSwimEvent(PlayerMoveEvent e){

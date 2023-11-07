@@ -1,3 +1,12 @@
+/*
+ * 	Author: James Jones
+ * 	Description:	When right clicking an armor stand with a golden hoe it opens a customization GUI that allows
+ * 					users to edit the pose of the armor stand, whether its big or small, whether it has physics, whether it has arms,
+ * 					or whether its baseplate is visible.
+ * */
+
+//TODO: Make this work on bedrock: bedrock guis are different as inventory click event is only executed when the item is dragged off and
+// bedrock does not work well with armor stand poses there may be a workaround
 package tech.techsmp.core.Listeners;
 
 import java.util.ArrayList;
@@ -23,7 +32,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
 
 
+
+
+
 public class ArmorStandListener implements Listener{
+
+	//Lore for all the gui items
 	ArrayList<String> booleanPhysicsLore = new ArrayList<String>();
 	ArrayList<String> booleanBasePlateLore = new ArrayList<String>();
 	ArrayList<String> booleanSmallLore = new ArrayList<String>();
@@ -53,7 +67,9 @@ public class ArmorStandListener implements Listener{
 	ArrayList<String> rightLegPitchLore = new ArrayList<String>();
 	ArrayList<String> rightLegYawLore = new ArrayList<String>();
 	ArrayList<String> rightLegTiltLore = new ArrayList<String>();
-	static boolean firstRun = false;
+
+	static boolean firstRun = false;		//if no one has used the armorstand editor yet the variables need to be declared can be replaced
+											//by setting the variables above but this feature is not used very often so memory saving ig
 	
 	static Map<Player, ArmorStand> armorStandEditor = new HashMap<Player, ArmorStand>(10);
 	
@@ -66,7 +82,7 @@ public class ArmorStandListener implements Listener{
     		if(p.getInventory().getItemInMainHand().getType().equals(Material.GOLDEN_HOE)) {
     			event.setCancelled(true);
     			
-    			if(!firstRun) {
+    			if(!firstRun) {							//time to set a bunch of variables
                     booleanPhysicsLore.add(0, "§7Toggles armor stand physics");
                     booleanPhysicsLore.add(1, "§7When disabled the armor stand will not be effected by gravity or collision");
                     booleanBasePlateLore.add(0, "§7Toggles base plate visibility");
@@ -149,11 +165,15 @@ public class ArmorStandListener implements Listener{
                     rightLegTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
                     
     			}
-    			firstRun = true;
+    			firstRun = true;			//do not do this again
 
+
+				//put player and target armor stand in hashmap so the armorstand can be found and edited
     			armorStandEditor.put(p, (ArmorStand) event.getRightClicked());
-    			GuiListener.inGui.add(p);
-    			
+    			GuiListener.inGui.add(p);//use the GUI listener Util to prevent players from abusing the gui
+
+
+				///Make the inventory with display names
                 Inventory inv = Bukkit.getServer().createInventory(null, 45, "ArmorStand Editor");
                 
 
@@ -341,7 +361,9 @@ public class ArmorStandListener implements Listener{
                 rightLegPitch.setItemMeta(rightLegPitchMeta);
                 rightLegYaw.setItemMeta(rightLegYawMeta);
                 rightLegTilt.setItemMeta(rightLegTiltMeta);
-                
+
+
+				//put the items in the inventory
                 inv.setItem(1, booleanPhysics);
                 inv.setItem(3, booleanBasePlate);
                 inv.setItem(5, booleanSmall);
@@ -376,7 +398,10 @@ public class ArmorStandListener implements Listener{
                 }
     		}
     	}
-    
+    /*
+    * 	Author:			James Jones
+    * 	Description:	When clicking on an editor gui this listener edits the target armorstand
+    * */
     @EventHandler
 	public void onInvClick(InventoryClickEvent event) {
     	Player p = (Player) event.getWhoClicked();
@@ -435,7 +460,7 @@ public class ArmorStandListener implements Listener{
 
     		if(is.getItemMeta().getDisplayName().equals("§aHead Pitch (Forward/Backward)")) {
 				Double pitch = Math.round(Math.abs(as.getHeadPose().getX()) * 10000.0) / 10000.0;
-    			if(event.getClick().equals(ClickType.RIGHT)) {
+    			if(event.getClick().equals(ClickType.RIGHT)) {			//if right clicking decrement pitch by pi/8 or snap back to 0
         			//Bukkit.getLogger().info("right");
     				if(pitch == 0 || pitch == 0.3925 || pitch == 0.785 || pitch == 1.1775 || pitch == 1.57 || pitch == 1.9625
     					|| pitch == 2.355 || pitch == 2.7475 || as.getHeadPose().getX() == 3.14) {
@@ -447,6 +472,7 @@ public class ArmorStandListener implements Listener{
     				}
     			}
     			else {
+					//if left clicking increment by pi/8
     				if(pitch == 0 || pitch == 0.3925 || pitch == 0.785 || pitch == 1.1775 || pitch == 1.57 || pitch == 1.9625
         					|| pitch == 2.355 || pitch == 2.7475 || as.getHeadPose().getX() == -3.14) {
     					as.setHeadPose(new EulerAngle(as.getHeadPose().getX() + 0.3925, as.getHeadPose().getY(), as.getHeadPose().getZ()));
@@ -457,6 +483,8 @@ public class ArmorStandListener implements Listener{
     				}
     			}
     		}
+
+
     		if(is.getItemMeta().getDisplayName().equals("§eHead Yaw (Clockwise/Anti-Clockwise)")) {
 				Double yaw = Math.round(Math.abs(as.getHeadPose().getY()) * 10000.0) / 10000.0;
     			if(event.getClick().equals(ClickType.RIGHT)) {

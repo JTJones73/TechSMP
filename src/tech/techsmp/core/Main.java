@@ -5,18 +5,11 @@ import tech.techsmp.core.cosmetic.*;
 import tech.techsmp.core.commands.*;
 import tech.techsmp.core.Listeners.*;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-
 
 
 import tech.techsmp.core.Join.*;
-
-import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
@@ -25,7 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import utils.ConfigMessage;
-import utils.Event;
+import utils.EventMode;
 import utils.Teleporter;
 import utils.TimeController;
 
@@ -49,14 +42,14 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPostJoin(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SleepingPercent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPreJoin(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new SpecTP(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PreCmdListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MineAlerts(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityHurtListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new AFKCheck(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new JoinAndLeaveMessage(), this);
          Bukkit.getServer().getPluginManager().registerEvents(new Teleporter(), this);
          Bukkit.getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new CreeperExplosion(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new GriefListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PetDamage(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SpawnProtection(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PetToggleSit(), this);
@@ -68,7 +61,7 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new EnderManGreif(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ParkourListener(), this);
-        //Bukkit.getServer().getPluginManager().registerEvents(new Event(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new EventModeListener(), this);
 
 
         getCommand("spleef").setExecutor(new Spleef());
@@ -99,8 +92,10 @@ public class Main extends JavaPlugin implements Listener{
          getCommand("unban").setExecutor(new Unban());
         getCommand("parkour").setExecutor(new Parkour());
          getCommand("rank").setExecutor(new Rank(this));
+        getCommand("event").setExecutor(new Event());
 
-         //Packet Listeners
+
+        //Packet Listeners
         spb.onSpecPacket();
 
         ItemStack membrane = new ItemStack(Material.PHANTOM_MEMBRANE);

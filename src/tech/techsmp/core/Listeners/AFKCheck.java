@@ -16,6 +16,13 @@ import java.util.UUID;
 public class AFKCheck implements Listener {
     public static Map<UUID, Long> lastActivity = new HashMap<>();
     static long afkThreshold = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+    /*
+     *   Author:         James Jones
+     *   Description:    If they have not done an activity in 5 minutes report them as afk
+     *   Param:          Player: Player to check if they are afk
+     *   Return:         boolean: true if player is AFK false if they are not AFK
+     * */
     public static boolean isPlayerAFK(Player player) {
         Long lastAction = lastActivity.get(player.getUniqueId());
         if (lastAction == null) {
@@ -29,7 +36,10 @@ public class AFKCheck implements Listener {
 
 
 
-
+/*
+*   Author:         James Jones
+*   Description:    Check if they move, interact, or chat if they do record their last activity
+* */
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
