@@ -1,4 +1,5 @@
 package tech.techsmp.core.Join;
+import tech.techsmp.core.Main;
 import tech.techsmp.core.commands.Whitelist;
 
 
@@ -28,7 +29,7 @@ public class PlayerPreJoin implements Listener{
     @EventHandler
 	public void preJoinEvent(AsyncPlayerPreLoginEvent e){
         Whitelist wl = new Whitelist();
-    	File bedrockWl = new File("/home/container/plugins/TechSMP/bedrock_whitelist.yml");
+    	File bedrockWl = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "bedrock_whitelist.yml");
     	if(banList.containsKey(e.getName())) {
     		e.disallow(Result.KICK_BANNED, "§cYou are banned from this server. \n §7Reason: " + PlayerPreJoin.banList.get(e.getName()) + "\n §ePlease message an admin on our discord to be given an unban date\n§7Discord: discord.ttumc.net");
     		return;
