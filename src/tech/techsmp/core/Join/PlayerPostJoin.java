@@ -48,7 +48,7 @@ public class PlayerPostJoin implements Listener{
             		p.setWhitelisted(true);
             		String wlList = "";
         			try {
-        		    	File bedrockWl = new File("/home/container/plugins/TechSMP/bedrock_whitelist.yml");
+        		    	File bedrockWl = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "bedrock_whitelist.yml");
 
         				Scanner scanner = new Scanner(bedrockWl);
         				while (scanner.hasNextLine()) {
@@ -63,7 +63,7 @@ public class PlayerPostJoin implements Listener{
         				exception.printStackTrace();
         			}
         				try {
-        				    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/bedrock_whitelist.yml", false); //the true will append the new data
+        				    FileWriter fw = new FileWriter(new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "bedrock_whitelist.yml"), false); //the true will append the new data
         				    fw.write(wlList);//appends the string to the file
         				    fw.close();
         				}
@@ -73,7 +73,7 @@ public class PlayerPostJoin implements Listener{
         				}
         			
             	}
-		    	File ranks = new File("/home/container/plugins/TechSMP/ranks.yml");
+		    	File ranks = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "ranks.yml");
 
             	try {
     				Scanner scanner = new Scanner(ranks);

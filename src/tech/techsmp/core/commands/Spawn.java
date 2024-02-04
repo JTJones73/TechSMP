@@ -22,7 +22,7 @@ public class Spawn implements CommandExecutor {
 		Teleporter.teleport(p, Bukkit.getWorld("world").getSpawnLocation());
 
 		//p.teleport(new Location(Bukkit.getWorld("world"), -95, 85, 0));
-		p.sendMessage(ConfigMessage.getMessage("SPAWN_TP_TP_SPAWN", new String[]{" "}));
+		p.sendMessage(ConfigMessage.getMessage("SPAWN_TP_TO_SPAWN", new String[]{" "}));
 		return true;
 
 	}
