@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.techsmp.core.Main;
+import utils.ConfigHandler;
 import utils.ConfigMessage;
 
 public class Sethome implements CommandExecutor {
@@ -47,7 +48,7 @@ public class Sethome implements CommandExecutor {
 				if(duplicateHome) {
 					sender.sendMessage(ConfigMessage.getMessage("SETHOME_DUPLICATE_HOME", new String[]{args[0]}));
 				}
-				else if(numHomes >=3 && p.isWhitelisted()) {
+				else if(numHomes >= ConfigHandler.getInt("home_NumHomes") && p.isWhitelisted()) {
 					sender.sendMessage(ConfigMessage.getMessage("SETHOME_AT_HOME_LIMIT", new String[]{" "}));
 				}
 				else if(numHomes >= 1 && !p.isWhitelisted()) {

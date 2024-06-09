@@ -1,3 +1,9 @@
+/*
+ * 	Author: 		James Jones
+ * 	Description:	This command deletes a home by iterating through the homes.yml file (this and the homes file type need to be reworked)
+ * */
+
+
 package tech.techsmp.core.commands;
 
 import java.io.File;

@@ -30,6 +30,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import tech.techsmp.core.Main;
 import tech.techsmp.core.commands.Killboard;
 import tech.techsmp.core.commands.Spleef;
+import utils.ConfigHandler;
 import utils.ConfigMessage;
 import utils.Teleporter;
 
@@ -54,8 +55,9 @@ public class SpleefListener implements Listener{
     private LinkedList<Player> fallListener = new LinkedList<>();
 
     int spleefLayer = 100;
-    public static Location spleefOffLocation = new Location(Bukkit.getWorld("world"), -106, 103.5, 29.5);
-    public static boolean isSpleefEnabled = true;
+    public static Location spleefOffLocation = new Location(Bukkit.getWorld(ConfigHandler.getString("spleef_world")), ConfigHandler.getInt("spleef_off_x"),
+            (double)ConfigHandler.getInt("spleef_off_y") + 0.5, (double)ConfigHandler.getInt("spleef_off_z") + 0.5);
+    public static boolean isSpleefEnabled = ConfigHandler.getBool("spleef_enabled");
     public static boolean broadcastSpleefs = false;
     public static LinkedList<Player> removeSpleeferDebounce = new LinkedList<>();
 
@@ -185,14 +187,15 @@ public class SpleefListener implements Listener{
 
     /*
      *   Author:         James Jones
-     *   Description:    Returns whether or not a location is in the spleef arena
+     *   Description:    Returns whether a location is in the spleef arena
      *   params:         Location: The location to check
      *   return:         boolean: true if location is in spleef arena false if it is not
+     * ConfigHandler.getInt("spleef_off_y")
      * */
     public static boolean isEventInSpleefArena(Location loc){
-        if(loc.getBlockX() <= -109 && loc.getBlockX() >= -143){
-            if(loc.getBlockY() <= 102 && loc.getBlockY() >= 97){
-                if(loc.getBlockZ() <= 46 && loc.getBlockZ() >= 12){
+        if(loc.getBlockX() <= ConfigHandler.getInt("spleef_arena_x_max") && loc.getBlockX() >= ConfigHandler.getInt("spleef_arena_x_min")){
+            if(loc.getBlockY() <= ConfigHandler.getInt("spleef_arena_y_max") && loc.getBlockY() >= ConfigHandler.getInt("spleef_arena_y_min")){
+                if(loc.getBlockZ() <= ConfigHandler.getInt("spleef_arena_z_max") && loc.getBlockZ() >= ConfigHandler.getInt("spleef_arena_z_min")){
                     return true;
                 }
             }
@@ -338,12 +341,12 @@ public class SpleefListener implements Listener{
     public void playerFallEvent(Player p){
         if(isEventInSpleefArena(p.getLocation())){
             if(!spleefers.contains(p)){     //if falling into spleef
-                if(p.getLocation().getY() > 101.1 && p.getGameMode().equals(GameMode.SURVIVAL)){
+                if(p.getLocation().getY() > (double)ConfigHandler.getInt("spleef_fallin") + 0.1 && p.getGameMode().equals(GameMode.SURVIVAL)){
                     putPlayerInSpleef(p);
                 }
             }
             else{       //if falling out of spleef taking the L
-                if(p.getLocation().getY() < 100.9 && p.getGameMode().equals(GameMode.SURVIVAL) && !removeSpleeferDebounce.contains(p)){
+                if(p.getLocation().getY() < (double)ConfigHandler.getInt("spleef_fallout") - 0.1 && p.getGameMode().equals(GameMode.SURVIVAL) && !removeSpleeferDebounce.contains(p)){
                     if(locToWhoBrokeSnow.containsKey(new Location(p.getLocation().getWorld(), p.getLocation().getBlockX(), 100, p.getLocation().getBlockZ()))){
                         Player spleeferP = locToWhoBrokeSnow.get(new Location(p.getLocation().getWorld(), p.getLocation().getBlockX(), 100, p.getLocation().getBlockZ()));
                         if(spleeferP.getName().equals(p.getName())){
