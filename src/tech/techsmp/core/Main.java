@@ -116,6 +116,7 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("parkour").setExecutor(new Parkour());
         getCommand("rank").setExecutor(new Rank(this));
         getCommand("event").setExecutor(new Event());
+        getCommand("island").setExecutor(new Skyblock());
 
 
         /*
