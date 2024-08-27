@@ -82,6 +82,8 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new PhantomSpawn(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ParkourListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EventModeListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new HighSpeedRail(), this);
+
 
 
         /*
