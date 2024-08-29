@@ -22,6 +22,8 @@ public class Rank implements CommandExecutor {
         attachment.setPermission("coreprotect.inspect", true);
         attachment.setPermission("coreprotect.rollback", true);
         attachment.setPermission("coreprotect.lookup", true);
+        attachment.setPermission("coreprotect.teleport", true);
+
     }
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -36,12 +38,26 @@ public class Rank implements CommandExecutor {
                             attachment.setPermission("rank.admin", false);
                             attachment.setPermission("rank.owner", false);
                             attachment.setPermission("rank.trusted", true);
+                            attachment.setPermission("hns.save", true);
+                            attachment.setPermission("hns.reset", true);
+                            attachment.setPermission("hns.reload", true);
+                            attachment.setPermission("hns.game.create", true);
+                            attachment.setPermission("hns.game.edit", true);
+                            attachment.setPermission("hns.game.start", true);
+                            attachment.setPermission("hns.game.stop", true);
                             giveCoreProtectPerms(p);
                         }
                         if(args[1].equalsIgnoreCase("admin")){ 
                             attachment.setPermission("rank.admin", true);
                             attachment.setPermission("rank.owner", false);
                             attachment.setPermission("rank.trusted", true);
+                            attachment.setPermission("hns.save", true);
+                            attachment.setPermission("hns.reset", true);
+                            attachment.setPermission("hns.reload", true);
+                            attachment.setPermission("hns.game.create", true);
+                            attachment.setPermission("hns.game.edit", true);
+                            attachment.setPermission("hns.game.start", true);
+                            attachment.setPermission("hns.game.stop", true);
                             giveCoreProtectPerms(p);
 
                         }
@@ -49,6 +65,13 @@ public class Rank implements CommandExecutor {
                             attachment.setPermission("rank.admin", true);
                             attachment.setPermission("rank.owner", true);
                             attachment.setPermission("rank.trusted", true);
+                            attachment.setPermission("hns.save", true);
+                            attachment.setPermission("hns.reset", true);
+                            attachment.setPermission("hns.reload", true);
+                            attachment.setPermission("hns.game.create", true);
+                            attachment.setPermission("hns.game.edit", true);
+                            attachment.setPermission("hns.game.start", true);
+                            attachment.setPermission("hns.game.stop", true);
                             giveCoreProtectPerms(p);
 
                         }

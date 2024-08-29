@@ -86,3 +86,12 @@ commands:
    spleef:
       description: Puts player in spleef
       usage: /spleef [on|off]
+   parkour:
+      description: Manages parkour
+      usage: /spleef <init|start|end> [player]
+   kb:
+      description: Manages parkour
+      usage: /kb <on|off|set>
+   event:
+      description: Manages event mode
+      usage: /kb <init|uniti|start|end>

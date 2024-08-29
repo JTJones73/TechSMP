@@ -1,3 +1,9 @@
+/*
+ * 	Author: 		James Jones
+ * 	Description:	This was the alternative to /home as it teleports you to your bed
+ * */
+
+
 package tech.techsmp.core.commands;
 
 import org.bukkit.entity.Player;

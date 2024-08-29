@@ -1,3 +1,8 @@
+/*
+* 	Author: 		James Jones
+* 	Description:	This command confuses people, but it teleports you to your last teleport location.
+* */
+
 package tech.techsmp.core.commands;
 import tech.techsmp.core.Listeners.PlayerTeleport;
 

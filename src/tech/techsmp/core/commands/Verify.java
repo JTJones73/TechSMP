@@ -1,5 +1,6 @@
 package tech.techsmp.core.commands;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -8,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.OfflinePlayer;
+import tech.techsmp.core.Main;
 import utils.ConfigMessage;
 
 public class Verify implements CommandExecutor {
@@ -35,7 +37,7 @@ public class Verify implements CommandExecutor {
                 	else{
                 		try
     					{
-    					    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/bedrock_whitelist.yml",true); //the true will append the new data
+    					    FileWriter fw = new FileWriter(new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "bedrock_whitelist.yml"),true); //the true will append the new data
     					    fw.write(args[0] + "\n");//appends the string to the file
     					    sender.sendMessage(ConfigMessage.getMessage("VERIFY_BEDROCK_VERIFIED", new String[]{args[0]}));
     					    fw.close();

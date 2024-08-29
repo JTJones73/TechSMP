@@ -1,3 +1,8 @@
+/*
+* 	Author: 		James Jones
+*	Description:	This class handles all tab completion (More work can be done here)
+* */
+
 package tech.techsmp.core;
 import tech.techsmp.core.commands.Homes;
 

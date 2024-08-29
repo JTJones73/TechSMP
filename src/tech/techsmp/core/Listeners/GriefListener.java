@@ -1,7 +1,5 @@
 package tech.techsmp.core.Listeners;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -14,7 +12,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class CreeperExplosion implements Listener{
+public class GriefListener implements Listener{
 
     @EventHandler
 	public void creeperExplode(EntityExplodeEvent e){

@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import tech.techsmp.core.Main;
 import utils.ConfigMessage;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Homes implements CommandExecutor {
-	File homes = new File("/home/container/plugins/TechSMP/homes.yml");
+	File homes = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml");
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("home")){

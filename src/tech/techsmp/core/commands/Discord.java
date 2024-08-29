@@ -1,3 +1,8 @@
+/*
+ * 	Author: 		James Jones
+ * 	Description:	This command sends you the discord link
+ * */
+
 package tech.techsmp.core.commands;
 
 import org.bukkit.command.Command;

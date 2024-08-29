@@ -1,3 +1,12 @@
+/*
+ * 	Author: James Jones
+ * 	Description:	When right clicking an armor stand with a golden hoe it opens a customization GUI that allows
+ * 					users to edit the pose of the armor stand, whether its big or small, whether it has physics, whether it has arms,
+ * 					or whether its baseplate is visible.
+ * */
+
+//TODO: Make this work on bedrock: bedrock guis are different as inventory click event is only executed when the item is dragged off and
+// bedrock does not work well with armor stand poses there may be a workaround
 package tech.techsmp.core.Listeners;
 
 import java.util.ArrayList;
@@ -23,7 +32,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
 
 
+
+
+
 public class ArmorStandListener implements Listener{
+
+	//Empty List for all item lore
 	ArrayList<String> booleanPhysicsLore = new ArrayList<String>();
 	ArrayList<String> booleanBasePlateLore = new ArrayList<String>();
 	ArrayList<String> booleanSmallLore = new ArrayList<String>();
@@ -53,10 +67,14 @@ public class ArmorStandListener implements Listener{
 	ArrayList<String> rightLegPitchLore = new ArrayList<String>();
 	ArrayList<String> rightLegYawLore = new ArrayList<String>();
 	ArrayList<String> rightLegTiltLore = new ArrayList<String>();
-	static boolean firstRun = false;
+
+	static boolean firstRun = false;		//if no one has used the armorstand editor yet the variables need to be declared can be replaced
+											//by setting the variables above but this feature is not used very often so memory saving ig
 	
 	static Map<Player, ArmorStand> armorStandEditor = new HashMap<Player, ArmorStand>(10);
-	
+
+
+
 
     @EventHandler
 	public void onHoeClick(PlayerInteractAtEntityEvent event) {
@@ -65,32 +83,33 @@ public class ArmorStandListener implements Listener{
     		Player p = event.getPlayer();
     		if(p.getInventory().getItemInMainHand().getType().equals(Material.GOLDEN_HOE)) {
     			event.setCancelled(true);
-    			
-    			if(!firstRun) {
-                    booleanPhysicsLore.add(0, "§7Toggles armor stand physics");
-                    booleanPhysicsLore.add(1, "§7When disabled the armor stand will not be effected by gravity or collision");
-                    booleanBasePlateLore.add(0, "§7Toggles base plate visibility");
-                    booleanBasePlateLore.add(1, "§7When disabled the armor stand will appear to be free standing");
-                    booleanSmallLore.add(0, "§7Toggles the size of the armor stand");
-                    booleanSmallLore.add(1, "§7Small is about half the size of a regular armor stand");
-                    booleanArmsLore.add(0, "§7Toggles whether or not the armor stand has arms.");
-                    booleanArmsLore.add(1, "§7If enabled the armor stand will be able to hold items.");
-                    infoBookLore.add(0, "§7Completely resets the position of the armor stand");
-                    infoBookLore.add(1, "§cWarning: you might not want to do this.");
-                    
-                    categoryHeadLore.add(0, "§7Change the position of the head");
-                    categoryHeadLore.add(1, "§7Right click and left click the options to edit the pose");
-                    categoryBodyLore.add(0, "§7Change the postion of the body");
-                    categoryBodyLore.add(1, "§7Right click and left click the options to edit the pose");
-                    categoryLeftArmLore.add(0, "§7Change the position of the left arm");
-                    categoryLeftArmLore.add(1, "§7Right click and left click the options to edit the pose");
-                    categoryRightArmLore.add(0, "§7Change the position of the left arm");
-                    categoryRightArmLore.add(1, "§7Right click and left click the options to edit the pose");
-                    categoryRightLegLore.add(0, "§7Change the position of the right leg");
-                    categoryRightLegLore.add(1, "§7Right click and left click the options to edit the pose");
-                    categoryLeftLegLore.add(0, "§7Change the position of the left leg");
-                    categoryLeftLegLore.add(1, "§7Right click and left click the options to edit the pose");
-                    
+
+				//It might be better to do this with a dedicated initializer but this works well
+    			if(!firstRun) {							//time to set a bunch of variables
+					booleanPhysicsLore.add(0, "§7Toggles armor stand physics");
+					booleanPhysicsLore.add(1, "§7When disabled the armor stand will not be effected by gravity or collision");
+					booleanBasePlateLore.add(0, "§7Toggles base plate visibility");
+					booleanBasePlateLore.add(1, "§7When disabled the armor stand will appear to be free standing");
+					booleanSmallLore.add(0, "§7Toggles the size of the armor stand");
+					booleanSmallLore.add(1, "§7Small is about half the size of a regular armor stand");
+					booleanArmsLore.add(0, "§7Toggles whether or not the armor stand has arms.");
+					booleanArmsLore.add(1, "§7If enabled the armor stand will be able to hold items.");
+					infoBookLore.add(0, "§7Completely resets the position of the armor stand");
+					infoBookLore.add(1, "§cWarning: you might not want to do this.");
+
+					categoryHeadLore.add(0, "§7Change the position of the head");
+					categoryHeadLore.add(1, "§7Right click and left click the options to edit the pose");
+					categoryBodyLore.add(0, "§7Change the postion of the body");
+					categoryBodyLore.add(1, "§7Right click and left click the options to edit the pose");
+					categoryLeftArmLore.add(0, "§7Change the position of the left arm");
+					categoryLeftArmLore.add(1, "§7Right click and left click the options to edit the pose");
+					categoryRightArmLore.add(0, "§7Change the position of the left arm");
+					categoryRightArmLore.add(1, "§7Right click and left click the options to edit the pose");
+					categoryRightLegLore.add(0, "§7Change the position of the right leg");
+					categoryRightLegLore.add(1, "§7Right click and left click the options to edit the pose");
+					categoryLeftLegLore.add(0, "§7Change the position of the left leg");
+					categoryLeftLegLore.add(1, "§7Right click and left click the options to edit the pose");
+
                     /*categoryHeadLore.add(0, "§7Toggles armor stand physics");
                     categoryHeadLore.add(1, "§7When disabled the armor stand will not be effected by gravity or collision");
                     categoryBodyLore.add(0, "§7Toggles base plate visibility");
@@ -103,60 +122,64 @@ public class ArmorStandListener implements Listener{
                     categoryLeftLegLore.add(1, "§7If enabled the armor stand will be able to hold items.");
                     categoryRightLegLore.add(0, "§7Toggles whether or not the armor stand has arms.");
                     categoryRightLegLore.add(1, "§7If enabled the armor stand will be able to hold items.");*/
-                    
 
-                    headPitchLore.add(0, "§7Change head front to back position");
-                    headPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    headYawLore.add(0, "§7Change head turn position");
-                    headYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
-                    headTiltLore.add(0, "§7Change head left to right position");
-                    headTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
-                    
-                    
-                    bodyPitchLore.add(0, "§7Change body front to back position");
-                    bodyPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    bodyYawLore.add(0, "Change body turn position");
-                    bodyYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
-                    bodyTiltLore.add(0, "§7Change body left to right position");
-                    bodyTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
-                    
-                    leftArmPitchLore.add(0, "§7Change left arm front to back position");
-                    leftArmPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    leftArmYawLore.add(0, "§7Change left arm turn position");
-                    leftArmYawLore.add(1,"§7Left click to turn clockwise right click to move counterclockwise");
-                    leftArmTiltLore.add(0, "§7Change left arm left to right position");
-                    leftArmTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
-                    
-                    leftLegPitchLore.add(0, "§7Change left leg front to back position");
-                    leftLegPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    leftLegYawLore.add(0, "§7Change left leg turn position");
-                    leftLegYawLore.add(1,"§7Left click to turn clockwise right click to move counterclockwise");
-                    leftLegTiltLore.add(0, "§7Change left leg left to right position");
-                    leftLegTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
-                    
-                    rightArmPitchLore.add(0, "§7Change right arm front to back position");
-                    rightArmPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    rightArmYawLore.add(0, "§7Change right arm turn position");
-                    rightArmYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
-                    rightArmTiltLore.add(0, "§7Change right arm left to right position");
-                    rightArmTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
-                    
-                    rightLegPitchLore.add(0, "§7Change right leg front to back position");
-                    rightLegPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
-                    rightLegYawLore.add(0, "§7Change right leg turn position");
-                    rightLegYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
-                    rightLegTiltLore.add(0, "§7Change right leg left to right position");
-                    rightLegTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+					headPitchLore.add(0, "§7Change head front to back position");
+					headPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					headYawLore.add(0, "§7Change head turn position");
+					headYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
+					headTiltLore.add(0, "§7Change head left to right position");
+					headTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+
+					bodyPitchLore.add(0, "§7Change body front to back position");
+					bodyPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					bodyYawLore.add(0, "Change body turn position");
+					bodyYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
+					bodyTiltLore.add(0, "§7Change body left to right position");
+					bodyTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+					leftArmPitchLore.add(0, "§7Change left arm front to back position");
+					leftArmPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					leftArmYawLore.add(0, "§7Change left arm turn position");
+					leftArmYawLore.add(1,"§7Left click to turn clockwise right click to move counterclockwise");
+					leftArmTiltLore.add(0, "§7Change left arm left to right position");
+					leftArmTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+					leftLegPitchLore.add(0, "§7Change left leg front to back position");
+					leftLegPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					leftLegYawLore.add(0, "§7Change left leg turn position");
+					leftLegYawLore.add(1,"§7Left click to turn clockwise right click to move counterclockwise");
+					leftLegTiltLore.add(0, "§7Change left leg left to right position");
+					leftLegTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+					rightArmPitchLore.add(0, "§7Change right arm front to back position");
+					rightArmPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					rightArmYawLore.add(0, "§7Change right arm turn position");
+					rightArmYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
+					rightArmTiltLore.add(0, "§7Change right arm left to right position");
+					rightArmTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
+
+					rightLegPitchLore.add(0, "§7Change right leg front to back position");
+					rightLegPitchLore.add(1, "§7Left click to pitch forward, right click to pitch backwards");
+					rightLegYawLore.add(0, "§7Change right leg turn position");
+					rightLegYawLore.add(1, "§7Left click to turn clockwise right click to move counterclockwise");
+					rightLegTiltLore.add(0, "§7Change right leg left to right position");
+					rightLegTiltLore.add(1, "§7Left click to tilt to the left, right click to tilt to the right");
                     
     			}
-    			firstRun = true;
+    			firstRun = true;			//do not do this again
 
+
+				//put player and target armor stand in hashmap so the armorstand can be found and edited
     			armorStandEditor.put(p, (ArmorStand) event.getRightClicked());
-    			GuiListener.inGui.add(p);
-    			
-                Inventory inv = Bukkit.getServer().createInventory(null, 45, "ArmorStand Editor");
-                
+    			GuiListener.inGui.add(p);//use the GUI listener Util to prevent players from abusing the gui
 
+
+				///Make the inventory with display names
+                Inventory inv = Bukkit.getServer().createInventory(null, 45, "ArmorStand Editor");
+
+				//Itemstacks for each parameter
                 ItemStack booleanPhysics = new ItemStack(Material.FEATHER);
                 ItemStack booleanBasePlate = new ItemStack(Material.SMOOTH_STONE_SLAB);
                 ItemStack booleanSmall = new ItemStack(Material.REPEATER);
@@ -169,10 +192,12 @@ public class ArmorStandListener implements Listener{
             	ItemMeta booleanArmsMeta = booleanArms.getItemMeta();
             	ItemMeta booleanSmallMeta = booleanSmall.getItemMeta();
             	ItemMeta infoBookMeta = infoBook.getItemMeta();
-            	
-                booleanPhysicsMeta.setDisplayName("§aPhysicis (Off/On)");
+
+
+            	//Give parameters displayNames
+                booleanPhysicsMeta.setDisplayName("§aPhysics (Off/On)");
                 booleanPhysicsMeta.setLore(booleanPhysicsLore);
-                booleanBasePlateMeta.setDisplayName("§8Base Plate (Visisble/Hidden)");
+                booleanBasePlateMeta.setDisplayName("§8Base Plate (Visible/Hidden)");
                 booleanBasePlateMeta.setLore(booleanBasePlateLore);
                 booleanArmsMeta.setDisplayName("§bArms (Enabled/Disabled)");
                 booleanArmsMeta.setLore(booleanArmsLore);
@@ -180,13 +205,15 @@ public class ArmorStandListener implements Listener{
                 booleanSmallMeta.setLore(booleanSmallLore);
                 infoBookMeta.setDisplayName("§c§lReset");
                 infoBookMeta.setLore(infoBookLore);
-            	
+
+				//Apply displayNames
                 booleanPhysics.setItemMeta(booleanPhysicsMeta);
                 booleanBasePlate.setItemMeta(booleanBasePlateMeta);
                 booleanSmall.setItemMeta(booleanSmallMeta);
                 booleanArms.setItemMeta(booleanArmsMeta);
                 infoBook.setItemMeta(infoBookMeta);
-                
+
+				//Itemstacks for categories (displayed at top so the user knows what part they are editing)
                 ItemStack categoryHead = new ItemStack(Material.SKELETON_SKULL);
                 ItemStack categoryBody = new ItemStack(Material.LEATHER_CHESTPLATE);
                 ItemStack categoryLeftArm = new ItemStack(Material.WOODEN_SWORD);
@@ -201,7 +228,7 @@ public class ArmorStandListener implements Listener{
             	ItemMeta categoryLeftLegMeta = categoryLeftLeg.getItemMeta();
             	ItemMeta categoryRightLegMeta = categoryRightLeg.getItemMeta();
                 
-                
+                //Give title and lore to categories
                 categoryHeadMeta.setDisplayName("§9Edit Head");
                 categoryHeadMeta.setLore(categoryHeadLore);
                 categoryBodyMeta.setDisplayName("§dEdit Body");
@@ -214,7 +241,8 @@ public class ArmorStandListener implements Listener{
                 categoryLeftLegMeta.setLore(categoryLeftLegLore);
                 categoryRightLegMeta.setDisplayName("§9Edit Right Leg");
                 categoryRightLegMeta.setLore(categoryRightLegLore);
-                
+
+				//Set tem meta
                 categoryHead.setItemMeta(categoryHeadMeta);
                 categoryBody.setItemMeta(categoryBodyMeta);
                 categoryLeftArm.setItemMeta(categoryLeftArmMeta);
@@ -222,22 +250,25 @@ public class ArmorStandListener implements Listener{
                 categoryLeftLeg.setItemMeta(categoryLeftLegMeta);
                 categoryRightLeg.setItemMeta(categoryRightLegMeta);
 
+				//Head yaw pitch and tilt Items
                 ItemStack headPitch = new ItemStack(Material.RED_WOOL);
                 ItemStack headYaw = new ItemStack(Material.YELLOW_WOOL);
                 ItemStack headTilt = new ItemStack(Material.GREEN_WOOL);
-             
-             
+
+
             	ItemMeta headPitchMeta = headPitch.getItemMeta();
             	ItemMeta headYawMeta = headYaw.getItemMeta();
             	ItemMeta headTiltMeta = headTilt.getItemMeta();
-                
+
+				//Head yaw pitch and tilt Display and Lore
                 headPitchMeta.setDisplayName("§aHead Pitch (Forward/Backward)");
                 headPitchMeta.setLore(headPitchLore);
                 headYawMeta.setDisplayName("§eHead Yaw (Clockwise/Anti-Clockwise)");
                 headYawMeta.setLore(headYawLore);
                 headTiltMeta.setDisplayName("§cHead Tilt (Left/Right)");
                 headTiltMeta.setLore(headPitchLore);
-                
+
+				//Head yaw pitch and tilt set meta
                 headPitch.setItemMeta(headPitchMeta);
                 headYaw.setItemMeta(headYawMeta);
                 headTilt.setItemMeta(headTiltMeta);
@@ -341,7 +372,9 @@ public class ArmorStandListener implements Listener{
                 rightLegPitch.setItemMeta(rightLegPitchMeta);
                 rightLegYaw.setItemMeta(rightLegYawMeta);
                 rightLegTilt.setItemMeta(rightLegTiltMeta);
-                
+
+
+				//put the items in the inventory
                 inv.setItem(1, booleanPhysics);
                 inv.setItem(3, booleanBasePlate);
                 inv.setItem(5, booleanSmall);
@@ -376,7 +409,10 @@ public class ArmorStandListener implements Listener{
                 }
     		}
     	}
-    
+    /*
+    * 	Author:			James Jones
+    * 	Description:	When clicking on an editor gui this listener edits the target armorstand
+    * */
     @EventHandler
 	public void onInvClick(InventoryClickEvent event) {
     	Player p = (Player) event.getWhoClicked();
@@ -435,7 +471,7 @@ public class ArmorStandListener implements Listener{
 
     		if(is.getItemMeta().getDisplayName().equals("§aHead Pitch (Forward/Backward)")) {
 				Double pitch = Math.round(Math.abs(as.getHeadPose().getX()) * 10000.0) / 10000.0;
-    			if(event.getClick().equals(ClickType.RIGHT)) {
+    			if(event.getClick().equals(ClickType.RIGHT)) {			//if right clicking decrement pitch by pi/8 or snap back to 0
         			//Bukkit.getLogger().info("right");
     				if(pitch == 0 || pitch == 0.3925 || pitch == 0.785 || pitch == 1.1775 || pitch == 1.57 || pitch == 1.9625
     					|| pitch == 2.355 || pitch == 2.7475 || as.getHeadPose().getX() == 3.14) {
@@ -447,6 +483,7 @@ public class ArmorStandListener implements Listener{
     				}
     			}
     			else {
+					//if left clicking increment by pi/8
     				if(pitch == 0 || pitch == 0.3925 || pitch == 0.785 || pitch == 1.1775 || pitch == 1.57 || pitch == 1.9625
         					|| pitch == 2.355 || pitch == 2.7475 || as.getHeadPose().getX() == -3.14) {
     					as.setHeadPose(new EulerAngle(as.getHeadPose().getX() + 0.3925, as.getHeadPose().getY(), as.getHeadPose().getZ()));
@@ -457,6 +494,8 @@ public class ArmorStandListener implements Listener{
     				}
     			}
     		}
+
+
     		if(is.getItemMeta().getDisplayName().equals("§eHead Yaw (Clockwise/Anti-Clockwise)")) {
 				Double yaw = Math.round(Math.abs(as.getHeadPose().getY()) * 10000.0) / 10000.0;
     			if(event.getClick().equals(ClickType.RIGHT)) {

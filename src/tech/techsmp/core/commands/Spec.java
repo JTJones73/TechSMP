@@ -73,7 +73,7 @@ public class Spec implements CommandExecutor {
                 	}
                     p.setGameMode(GameMode.SPECTATOR);
                     p.setPlayerListName(p.getDisplayName());
-                    p.sendMessage(ConfigMessage.getMessage("SPEC_WELCOME", new String[]{" "}));
+                    p.sendMessage(ConfigMessage.getMessage("SPEC_YOU_ARE_SPEC", new String[]{" "}));
                     if(p.hasPermission("rank.trusted"))
                         p.performCommand("co i dontdothis");
                     sender.sendMessage(ConfigMessage.getMessage("SPEC_PUT_OTHER_IN_SPEC", new String[]{p.getName()}));

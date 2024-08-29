@@ -1,3 +1,9 @@
+/*
+ * 	Author: 		James Jones
+ * 	Description:	This command deletes a home by iterating through the homes.yml file (this and the homes file type need to be reworked)
+ * */
+
+
 package tech.techsmp.core.commands;
 
 import java.io.File;
@@ -10,10 +16,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.techsmp.core.Main;
 import utils.ConfigMessage;
 
 public class Delhome implements CommandExecutor {
-	File homes = new File("/home/container/plugins/TechSMP/homes.yml");
+	File homes = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml");
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(args.length == 1) {	
@@ -41,7 +48,7 @@ public class Delhome implements CommandExecutor {
 			}
 			else {
 				try {
-				    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/homes.yml", false); //the true will append the new data
+				    FileWriter fw = new FileWriter(new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml"), false); //the true will append the new data
 				    fw.write(homesList);//appends the string to the file
 				    p.sendMessage(ConfigMessage.getMessage("DEL_DELETED", new String[]{args[0]}));
 				    fw.close();

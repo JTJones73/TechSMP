@@ -6,5 +6,4 @@ module techsmp {
     requires java.desktop;
     requires org.apache.httpcomponents.httpcore;
     requires org.apache.httpcomponents.httpclient;
-    requires com.google.common;
 }

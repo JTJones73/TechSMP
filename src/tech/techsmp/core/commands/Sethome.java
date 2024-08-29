@@ -10,10 +10,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.techsmp.core.Main;
+import utils.ConfigHandler;
 import utils.ConfigMessage;
 
 public class Sethome implements CommandExecutor {
-	File homes = new File("/home/container/plugins/TechSMP/homes.yml");
+	File homes = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml");
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		int numHomes = 0;
@@ -46,7 +48,7 @@ public class Sethome implements CommandExecutor {
 				if(duplicateHome) {
 					sender.sendMessage(ConfigMessage.getMessage("SETHOME_DUPLICATE_HOME", new String[]{args[0]}));
 				}
-				else if(numHomes >=3 && p.isWhitelisted()) {
+				else if(numHomes >= ConfigHandler.getInt("home_NumHomes") && p.isWhitelisted()) {
 					sender.sendMessage(ConfigMessage.getMessage("SETHOME_AT_HOME_LIMIT", new String[]{" "}));
 				}
 				else if(numHomes >= 1 && !p.isWhitelisted()) {
@@ -55,7 +57,7 @@ public class Sethome implements CommandExecutor {
 				else {
 					try
 					{
-					    FileWriter fw = new FileWriter("/home/container/plugins/TechSMP/homes.yml",true); //the true will append the new data
+					    FileWriter fw = new FileWriter(new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml"),true); //the true will append the new data
 					    fw.write(p.getUniqueId().toString() + "|" + args[0].toLowerCase() + "|" + p.getLocation().getWorld().getName() + "|" + p.getLocation().getBlockX()+ "|" + p.getLocation().getBlockY()+ "|" + p.getLocation().getBlockZ() + "|\n");//appends the string to the file
 					    p.sendMessage(ConfigMessage.getMessage("SETHOME_ADDED_HOME", new String[]{args[0]}));
 					    fw.close();

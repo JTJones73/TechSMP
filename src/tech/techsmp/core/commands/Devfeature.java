@@ -1,3 +1,9 @@
+/*
+ * 	Author: 		James Jones
+ * 	Description:	This command is for testing new features currently it is testing the inventory save feature.
+ * */
+
+
 package tech.techsmp.core.commands;
 
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -18,6 +24,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import tech.techsmp.core.Packet.SpecPacketBlocker;
+import utils.ConfigHandler;
 import utils.ConfigMessage;
 import utils.InvSave;
 
@@ -36,18 +43,32 @@ public class Devfeature implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 			if(sender.isOp()) {
-
+                if(args[0].equalsIgnoreCase("config")){
+                    for(int i = 0; i < ConfigHandler.getInt("message_num"); i++)
+                        sender.sendMessage(ConfigHandler.getString("message_test"));
+                }
                 if(args[0].equalsIgnoreCase("text")){
-                    //ConfigMessage.getMessage("&%#1F3839%&lHello %0%, %1% is here", new String[]{"Capsian", "JT"});
+                    //ConfigMessage.getMessage("&%#1F3839%&lHello %0%, %1% is here", new String[]{" "});
                     ConfigMessage.loadMessages();
                 }
                 if(args[0].equalsIgnoreCase("save")){
                     Player p = (Player) sender;
-                    InvSave.saveInv(p);
+                    InvSave.pushInv(p);
                 }
                 if(args[0].equalsIgnoreCase("load")){
                     Player p = (Player) sender;
                     InvSave.popAndSetPlayerInv(p);
+                }
+                if(args[0].equalsIgnoreCase("sk")){
+                    Player p = (Player) sender;
+                    InvSave.saveInv(p, args[1]);
+                }
+                if(args[0].equalsIgnoreCase("lk")){
+                    Player p = (Player) sender;
+                    InvSave.loadInv(p, args[1]);
+                }
+                if(args[0].equalsIgnoreCase("dk")){
+                    InvSave.delInvKey(args[1]);
                 }
                 if(args[0].equalsIgnoreCase("addPlayer")){
 
