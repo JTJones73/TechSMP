@@ -62,6 +62,7 @@ public class Main extends JavaPlugin implements Listener{
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPostJoin(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SleepingPercent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerPreJoin(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PreCmdListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MineAlerts(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new EntityHurtListener(), this);
@@ -92,6 +93,7 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("spleef").setExecutor(new Spleef());
         getCommand("discord").setExecutor(new Discord());
         getCommand("vanish").setExecutor(new Vanish());
+        getCommand("playtime").setExecutor(new PlayTime());
         getCommand("devfeature").setExecutor(new Devfeature());
         getCommand("home").setExecutor(new Homes());
         getCommand("back").setExecutor(new Back());
@@ -116,7 +118,7 @@ public class Main extends JavaPlugin implements Listener{
         getCommand("tban").setExecutor(new Tban());
         getCommand("unban").setExecutor(new Unban());
         getCommand("parkour").setExecutor(new Parkour());
-        getCommand("rank").setExecutor(new Rank(this));
+        getCommand("rank").setExecutor(new Rank());
         getCommand("event").setExecutor(new Event());
 
 

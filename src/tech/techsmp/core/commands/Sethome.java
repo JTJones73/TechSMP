@@ -14,6 +14,8 @@ import tech.techsmp.core.Main;
 import utils.ConfigHandler;
 import utils.ConfigMessage;
 
+import javax.print.DocFlavor;
+
 public class Sethome implements CommandExecutor {
 	File homes = new File(Main.getInstance().getDataFolder().getAbsoluteFile(), "homes.yml");
 	@Override
@@ -28,6 +30,10 @@ public class Sethome implements CommandExecutor {
 			}
 			if(args.length == 1 && sender instanceof Player) {
 				Player p = (Player) sender;
+				if(p.getLocation().getWorld().getName().toLowerCase().contains("end")){
+					sender.sendMessage(ConfigMessage.getMessage("SETHOME_NO_END_HOMES", new String[]{}));
+					return true;
+				}
 				try {
 					Scanner scanner = new Scanner(homes);
 					while (scanner.hasNextLine()) {
