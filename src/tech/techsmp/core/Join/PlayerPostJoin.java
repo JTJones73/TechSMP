@@ -11,21 +11,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import tech.techsmp.core.commands.Rank;
 import tech.techsmp.core.commands.Vanish;
 import utils.ConfigMessage;
+import utils.OnlineTime;
 
 
 public class PlayerPostJoin implements Listener{
-
+	public static HashMap<Player, Integer> logInMs = new HashMap<>();
+	public static HashMap<Player, Integer> afkMs = new HashMap<>();
+	public static HashMap<Player, Integer> totalAfkMs = new HashMap<>();
+	public static HashMap<Player, Integer> totalActiveMs = new HashMap<>();
     @EventHandler
 	public void postJoinEvent(PlayerLoginEvent e){
         Player p = e.getPlayer();
-
+		logInMs.put(p, (int)System.currentTimeMillis());
+		totalAfkMs.put(p, OnlineTime.getAfkMs(p));
+		totalActiveMs.put(p, OnlineTime.getActiveMs(p));
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -84,7 +92,8 @@ public class PlayerPostJoin implements Listener{
     						for(int i = p.getUniqueId().toString().length() + 1; i < Line.length(); i++) {
     							rankName = rankName + Line.charAt(i);
     						}
-    	                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rank " + p.getName() +  " " + rankName);
+							//Bukkit.broadcastMessage("Giving " + p.getName() + " rank " + rankName);
+							Rank.givePlayerRank(p, rankName);
 
     					}
     				}
@@ -106,10 +115,10 @@ public class PlayerPostJoin implements Listener{
                 @Override
                     public void run() {
                         p.setPlayerListHeader("§eWelcome to the §5§lTN Tech §7Minecraft server");
-                        p.setPlayerListFooter("§6Griefing is bannable (we have block logging)\n§eJoin our discord: discord.ttumc.tech\n§aCommands: §7§o/help /tpa /wl /bedtp");
+                        p.setPlayerListFooter("§6Griefing is bannable (we have block logging)\n§eJoin our discord: discord.ttumc.tech\n§aCommands: §7§o/help /tpa /wl /home");
                         
                     }
-                }, 10L);
+                }, 60L);
 
     }
     

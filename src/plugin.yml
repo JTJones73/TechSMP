@@ -95,3 +95,6 @@ commands:
    event:
       description: Manages event mode
       usage: /kb <init|uniti|start|end>
+   playtime:
+      description: Allows you to see the last time you or someone you love touched grass
+      usage: /playtime [player]
