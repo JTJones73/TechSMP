@@ -21,7 +21,6 @@ public class HighSpeedRail implements Listener {
     @EventHandler
     public void cartRightClickEvent(PlayerInteractEntityEvent e){
         if(e.getRightClicked() instanceof Minecart){
-            Bukkit.broadcastMessage(e.getPlayer().getItemInHand().getType().toString());
 
             if(e.getPlayer().getItemInHand().getType().equals(Material.GOLDEN_HOE)){
                 Minecart m = (Minecart) e.getRightClicked();
